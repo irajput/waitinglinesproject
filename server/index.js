@@ -3,6 +3,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3001;
+process.env.MONGO_URI="hello"; //gitignore
 
 const app = express();
 require('dotenv').config();
@@ -12,7 +13,7 @@ app.get("/api", (req, res) => {
 
 const connectToDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI, { 
       useUnifiedTopology: true,
     });
     console.log("Connected to database");
