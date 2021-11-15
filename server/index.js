@@ -2,11 +2,10 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-
 const PORT = process.env.PORT || 3001;
 
 const app = express();
-
+require('dotenv').config();
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
@@ -14,10 +13,7 @@ app.get("/api", (req, res) => {
 const connectToDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
-      useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
     });
     console.log("Connected to database");
   } catch (err) {
