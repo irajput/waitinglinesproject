@@ -6,6 +6,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const models = require("./models/models.js");
 const jwt = require("jsonwebtoken");
+const passJwt = require('passport-jwt');
+const JWTStrategy = passJwt.Strategy;
+const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -18,7 +21,6 @@ require('dotenv').config();
 app.use(passport.initialize());
 
 
-    
 
 const connectToDB = async () => {
   try {
@@ -47,7 +49,6 @@ passport.use(
 	async (email,password,done) => {
 	    try{
 		//try to make a model
-		console.log(models.User);
 		const newUser = await models.User.create(
 		    {email,password});
 		return done(null,newUser);
@@ -85,6 +86,26 @@ passport.use(
     )
 );
 
+passport.use(
+    'jwt',
+    new JWTStrategy(
+	{
+	    secretOrKey: process.env.JWT_SECRET,
+	    jwtFromRequest: ExtractJWT.fromHeader('secret_token'),
+	},
+	async (token,next) => {
+	    console.log('here');
+	    try{
+		return next(null,token.user);
+	    } catch (error) {
+		next(error);
+	    }
+	}
+    )
+);
+
+ 
+
 //////////////////
 // Routing code //
 //////////////////
@@ -106,22 +127,49 @@ app.post(
 app.post(
     "/login",
     async (req,res,next) => {
-	passport.authenticate('login',
+	await passport.authenticate('login',
 	    (err,user,info) => {
 		try{
 		    if(err || !user){
-			return next(err);
+			console.log(err);
+			return new Error("An authentication error occured");
 		    }
-		    return res.json("login successful");
-		    
+		    req.login(
+			user,
+			{session : false},
+			async (error) => {
+			    if(error) return next(error);
+			    const body = {_id: user._id}
+			    const token = jwt.sign({user:body},process.env.JWT_SECRET);
+			    return res.json({ token });
+			}
+		    );
 		} catch (error){
 		    return next(error);
 		}
 	    }
-	)(req,res,next);
+			     )(req,res,next);
     }
 )
+//////////////////
+// secure roots //
+//////////////////
 
+const secureRoots = express.Router();
+
+secureRoots.get(
+    '/testJWT',
+    async (req,res,next) => {
+	res.json({
+	    message: 'you made it!',
+	    user: req.user,
+	    token: req.query.secret_token
+	});
+    }
+);
+
+app.use('/user',passport.authenticate('jwt',{session : false}), secureRoots);
+    
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
