@@ -1,24 +1,28 @@
 // client/src/App.js
 
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState } from "react";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Dashboard from './Dashboard.js';
+import Preferences from './Preferences.js';
+import Login from './Login.js';
 import "./App.css";
 
 function App() {
-  const [data, setData] = React.useState(null);
+  const [token, setToken] = useState();
 
-  React.useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setData(data.message));
-  }, []);
-
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{!data ? "Loading..." : data}</p>
-      </header>
+    <div className="wrapper">
+      <h1>Application</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard/>} />
+          <Route path="/preferences" element={<Preferences/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
