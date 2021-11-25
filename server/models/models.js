@@ -37,4 +37,38 @@ UserSchema.methods.isRightPassword = async function (password) {
 
 const UserModel = mongoose.model('user',UserSchema);
 
+const PredictionSchema = mongoose.Schema({
+	modelsUsed: {
+		type: Number,
+		default: 0,
+	}
+	values: [
+		{
+			time: {
+				type: Number,
+				required:true,
+			},
+			avgWaitTime: {
+				type: Number,
+				required:true,
+			},
+		},
+	],
+});
+
+PredictionSchema.methods.compareUnweighted(points){
+	// for now, I'll assume that these points were taken at approximately the same time
+	// in the future, this may not be the case, so I record the time as well in the schema
+	let i = 0;
+	let totalDifference = 0;
+	while(i < this.values.length && i < points.length){
+		totalDifference += Math.abs(this.values[i].avgWaitTime - points[1]);
+	}
+	if(i === 0) return Infinity // If one of these is empty, they are infinitely far apart and we should do absolutely no predictions
+	return totalDifference/i; //returns the average
+}
+
+const PredictionModel = mongoose.model('prediction',PredictionSchema);
+
 module.exports.User = UserModel;
+module.exports.Prediction = PredictionModel;
