@@ -12,6 +12,8 @@ const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+const restuarantRoutes = require("./routes/restaurant");
+
 
 const USERNAMEFIELD = 'email';
 const PASSWORDFIELD = 'password';
@@ -170,6 +172,9 @@ secureRoots.get(
 
 app.use('/user',passport.authenticate('jwt',{session : false}), secureRoots);
     
+app.use('/restaurant',restuarantRoutes); //for restaurant routes/profile
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
