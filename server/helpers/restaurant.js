@@ -15,7 +15,7 @@ exports.createRestaurant = async function (req, res, next) {
   try {
     await restaurant.save();
     return res.status(200).json({
-      event: restaurant,
+      restaurant: restaurant,
     });
   } catch (err) {
     return res.status(400).json({
