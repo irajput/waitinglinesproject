@@ -21,15 +21,15 @@ function App() {
   return (
     <div className ="App"> 
     <nav>
-        <ul>
+        <ul id="navbar">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/"> Home </Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login"> Login </Link>
           </li>
           <li>
-            <Link to="/slider">Slider</Link>
+            <Link to="/slider"> Slider </Link>
           </li>
         </ul>
       </nav>
