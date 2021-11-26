@@ -12,6 +12,9 @@ const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
 
 const app = express();
+const restaurantRoutes = require("./routes/restaurant");
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true }));  //for testing in Postman btw
 
 const USERNAMEFIELD = 'email';
 const PASSWORDFIELD = 'password';
@@ -154,7 +157,7 @@ app.post(
 //////////////////
 // secure roots //
 //////////////////
-
+//let auth=
 const secureRoots = express.Router();
 
 secureRoots.get(
@@ -168,8 +171,13 @@ secureRoots.get(
     }
 );
 
-app.use('/user',passport.authenticate('jwt',{session : false}), secureRoots);
-    
+let authMiddleware=passport.authenticate('jwt',{session : false});
+
+//list all endpoints here
+app.use('/user',authMiddleware, secureRoots);  
+app.use('/restaurant',authMiddleware,restaurantRoutes); //for restaurant routes/profile
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
