@@ -146,48 +146,6 @@ app.post(
 	});
     }
 );
-let fakeTime = 0;
-let step = 5*60*1000;
-let val;
-app.post(
-	"/testMake",
-	async(req,res,next) => {
-		val = await models.Prediction.create({modelsUsed:1,values : [{time:0,avgWaitTime:400},{time:5*60*1000,avgWaitTime:500},{time:5*60*2000,avgWaitTime:600}]});
-		console.log(val);
-		res.json(val);
-	}
-);
-// app.post(
-// 	"/testPush",
-// 	async(req,res,next) => {
-// 		currentDayLists.DeNeve.push({time:fakeTime,total:+req.query.wait,elements:["doesn't matter for tests"]});
-// 		fakeTime+=step;
-// 		console.log(currentDayLists.DeNeve);
-// 		res.json(currentDayLists.DeNeve);
-// 	}
-// );
-// app.post(
-// 	"/testCompare",
-// 	async(req,res,next) => {
-// 		const compareTo = await models.Prediction.findOne({_id : "61a08b5f13ce4fb8b98b534c"});
-// 		res.json({unweighted:compareTo.compareUnweighted(currentDayLists.DeNeve),weighted:compareTo.compareWeighted(currentDayLists.DeNeve)});
-// 	}
-// );
-// app.post(
-// 	"/testPredictions",
-// 	async(req,res,next) => {
-// 		const compareTo = await models.Prediction.findOne({_id : "61a08b5f13ce4fb8b98b534c"});
-// 		res.json(compareTo.generatePrediction(currentDayLists.DeNeve));
-// 	}
-// );
-// app.post(
-// 	"/testIntegrate",
-// 	async(req,res,next) => {
-// 		const compareTo = await models.Prediction.findOne({_id : "61a08b5f13ce4fb8b98b534c"});
-// 		compareTo.integrateValues(currentDayLists.DeNeve);
-// 		res.json(compareTo);
-// 	}
-// );
 app.post(
     "/login",
     async (req,res,next) => {
@@ -349,14 +307,14 @@ async function storeCurrChunks(){
 			time : 0,
 		};
 		// We can probably make this more performant, maybe cache these values?
-		let histVals = models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
 		if(histVals == null){
 			histVals = await models.Prediction.create(
 				{dayOfWeek : dayOfWeek,
 				 resturantCode:val,
 				 modelsUsed:0,values : []});
 		}
-		currentPredictions[val] = histVals.generatePrediction(currentDayLists)
+		currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
 	}
 }
 cron.schedule('*/5 * * * *', storeCurrChunks);
@@ -365,7 +323,7 @@ async function pushDayBack(){
 		let val = RESTURAUNTCODES[i]
 		let now = new Date()
 		let dayOfWeek = now.getDay();
-		let histVals = models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
 		if(histVals == null){
 			histVals = await models.Prediction.create(
 				{dayOfWeek : dayOfWeek,
