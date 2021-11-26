@@ -40,3 +40,22 @@ exports.getRestaurantProfile = async function (req, res, next) {
     });
   }
   };
+
+  
+  exports.setSlider = async function (req, res, next) {
+    let { name, sliderNum } = req.body;
+    console.log(sliderNum);
+    let restaurant = await restaurantModel.findOneAndUpdate({ name: name },{crowdednessRating:sliderNum});
+    try {
+    
+      return res.status(200).json({
+        message:"Successfully updated crowdedness rating",
+      });
+    } catch (err) {
+      return res.status(400).json({
+        message: err.message,
+      });
+    }
+  }
+
+  

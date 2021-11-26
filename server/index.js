@@ -10,20 +10,15 @@ const passJwt = require('passport-jwt');
 const JWTStrategy = passJwt.Strategy;
 const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
-
 const app = express();
-const restaurantRoutes = require("./routes/restaurant");
-app.use(express.json());
-//app.use(express.urlencoded({ extended: true }));  //for testing in Postman btw
-
-const USERNAMEFIELD = 'email';
-const PASSWORDFIELD = 'password';
-
 require('dotenv').config();
-
+app.use(express.json());
 app.use(passport.initialize());
 
 
+//list all the routes here
+const restaurantRoutes = require("./routes/restaurant");
+const secureRoutes = require("./routes/secureRoutes");
 
 const connectToDB = async () => {
   try {
@@ -41,7 +36,8 @@ const connectToDB = async () => {
 ////////////////////////////////////////////////////////
 // Middleware code, for use by passport at the moment //
 ////////////////////////////////////////////////////////
-
+const USERNAMEFIELD = 'email';
+const PASSWORDFIELD = 'password';
 passport.use(
     'signup',
     new LocalStrategy(
@@ -157,26 +153,13 @@ app.post(
 //////////////////
 // secure roots //
 //////////////////
-//let auth=
-const secureRoots = express.Router();
 
-secureRoots.get(
-    '/testJWT',
-    async (req,res,next) => {
-	res.json({
-	    message: 'you made it!',
-	    user: req.user,
-	    token: req.query.secret_token
-	});
-    }
-);
 
 let authMiddleware=passport.authenticate('jwt',{session : false});
 
 //list all endpoints here
-app.use('/user',authMiddleware, secureRoots);  
+app.use('/user',authMiddleware, secureRoutes); //for user/profile
 app.use('/restaurant',authMiddleware,restaurantRoutes); //for restaurant routes/profile
-
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
