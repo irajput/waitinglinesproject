@@ -174,7 +174,7 @@ app.post(
 app.get(
 	"/prediction",
 	(req,res) => {
-		const resturaunt = req.query.resturaunt; 
+		const resturaunt = req.query.resturant; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({
@@ -260,8 +260,8 @@ secureRoots.post(
     '/recordTime',
     async (req,res,next) => {
 		// get our field inputs
-		const resturaunt = req.query.resturaunt; // which resturant the user was waiting for
-		const timeDuration = +req.query.timeDuration; // how long they waited in seconds(can be changed to millis later)
+		const resturaunt = req.body.resturant; // which resturant the user was waiting for
+		const timeDuration = +req.body.timeDuration; // how long they waited in seconds(can be changed to millis later)
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json("Invalid Resturaunt Code!");
