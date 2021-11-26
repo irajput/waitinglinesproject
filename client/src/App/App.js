@@ -4,6 +4,8 @@ import "./App.css";
 import Home from "../Home/Home";
 import Slider from "../Slider/Slider";
 import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import Display from "../Display/Display";
 import { Routes, Route, Link} from "react-router-dom";
 
 function setToken(userToken) {
@@ -31,6 +33,12 @@ function App() {
           <li>
             <Link to="/slider"> Slider </Link>
           </li>
+          <li>
+            <Link to="/profile"> Profile </Link>
+          </li>
+          <li>
+            <Link to="/display"> Wait Line Display </Link>
+          </li>
         </ul>
       </nav>
     
@@ -42,6 +50,10 @@ function App() {
       <Route path="/login" element={<Login/>} />
 
       <Route path="/slider" element={<Slider/>} />
+
+      <Route path="/profile" element={<Profile/>} />
+
+      <Route path="/display" element={<Display/>} />
 
     </Routes>
 
