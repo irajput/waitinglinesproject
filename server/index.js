@@ -157,7 +157,7 @@ app.post(
 //////////////////
 // secure roots //
 //////////////////
-
+//let auth=
 const secureRoots = express.Router();
 
 secureRoots.get(
@@ -171,9 +171,11 @@ secureRoots.get(
     }
 );
 
+let authMiddleware=passport.authenticate('jwt',{session : false});
+
 //list all endpoints here
-app.use('/user',passport.authenticate('jwt',{session : false}), secureRoots);  
-app.use('/restaurant',restaurantRoutes); //for restaurant routes/profile
+app.use('/user',authMiddleware, secureRoots);  
+app.use('/restaurant',authMiddleware,restaurantRoutes); //for restaurant routes/profile
 
 
 app.listen(PORT, () => {
