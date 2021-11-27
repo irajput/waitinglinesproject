@@ -1,0 +1,30 @@
+.App {
+    display: flex;
+    font-family: sans-serif;
+    margin-top: 10px;
+  
+  }
+  
+  .container {
+    width: 25%;
+  }
+  
+  .form-container {
+    width: 50%;
+  }
+  
+  .steps-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .steps-item {
+    padding: 5px;
+    min-height: 80px;
+  }
+  
+  .vertical-slider {
+    height: 380px;
+    width: 25%;
+    /* border: 1px solid grey; */
+  }

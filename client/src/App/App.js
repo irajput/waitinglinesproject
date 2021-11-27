@@ -2,7 +2,7 @@
 import React from "react";
 import "./App.css";
 import Home from "../Home/Home";
-import Slider from "../Slider/Slider";
+import Slider from "../Slider/SliderApp";
 import Login from "../Login/Login";
 import { Routes, Route, Link} from "react-router-dom";
 
@@ -19,7 +19,7 @@ function getToken() {
 
 function App() {  
   return (
-    <div className ="App"> 
+    <div className ="WaitApp"> 
     <nav>
         <ul id="navbar">
           <li>
