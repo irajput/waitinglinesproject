@@ -4,7 +4,7 @@ import "./Home.css";
 function Home() {
     return (
         <div>
-            <h1 class="welcome">
+            <h1 className="welcome">
                 Welcome To The Waiting Lines Project
             </h1>
         </div>

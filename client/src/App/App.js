@@ -10,12 +10,6 @@ import { Routes, Route, Link} from "react-router-dom";
 import useToken from "./useToken"
 
 function App() {
-  const { token, setToken } = useToken();
-
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-  
   return (
     <div className ="App"> 
     <nav>
