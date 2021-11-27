@@ -62,7 +62,7 @@ class HallForm extends React.Component {
   handleSubmit(event) {
     alert('You submitted data for: ' + this.state.value + " val: " + this.state.choice);
     event.preventDefault();
-
+    {/* sessionStorage.getItem('token') */}
     
     return fetch('http://localhost:3001/restaurant/updateSlider', {
     mode: 'no-cors',
