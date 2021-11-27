@@ -1,7 +1,7 @@
 import './Profile.css';
 import Checkbox from './Checkbox';
 import Switch from './Switch';
-import getToken from '../App/App'
+// import getToken from '../App/App'
 
 // async function profile() {
 //   return fetch('http://localhost:3001/user/profile', {

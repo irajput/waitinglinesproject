@@ -4,11 +4,13 @@ import React, { Component } from 'react';
 //https://www.w3schools.com/howto/howto_js_sort_table.asp
 
 // async function restaurants() {
-//   return fetch('http://localhost:3001/restaurant', {
+//   return fetch('http://localhost:3001/restaurant/profile', {
+//     mode: 'no-cors',
 //     method: 'GET',
 //     headers: {
-//       'Content-Type': 'application/json',
+//         'Content-Type': 'application/json'
 //     },
+//     // body: {"name": "Bruin Plate"},
 //   })
 //     .then(data => data.json())
 //  }
