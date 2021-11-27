@@ -1,28 +1,28 @@
 import './Profile.css';
 import Checkbox from './Checkbox';
 import Switch from './Switch';
-// import getToken from '../App/App'
+import getToken from '../App/App'
 
-// async function profile() {
-//   return fetch('http://localhost:3001/user/profile', {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'secret_token': getToken()
-//     },
-//   })
-//     .then(data => data.json())
-//  }
+async function profile() {
+  return fetch('http://localhost:3001/user/profile', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTEyNWM0YTVmZDJkNjM0NGQwNGE5OCJ9LCJpYXQiOjE2Mzc5ODg2NTR9.c2S3ITwUkUZ0P8_OL6a0Nc1GMUx6XQ2l2M-Fe9QFbW4"
+    },
+  })
+    .then(data => data.json())
+ }
 
-//  function logProfile() {
-//    var data = profile()
-//    console.log(data)
-//  }
+ function logProfile() {
+   var data = profile()
+   console.log(data)
+ }
 
 function Profile() {
   return (
     <div className="profile">
-      {/* <input type="button" value="Log profile" onClick={logProfile()}/> */}
+      <input type="button" value="Log profile" onClick={logProfile()}/>
       <h1>Profile Page</h1>
       <h3>Receive notifications</h3>
       <Switch />

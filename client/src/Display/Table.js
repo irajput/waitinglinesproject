@@ -167,16 +167,16 @@ class Table extends Component {
             <div>
                 {/* <input type="button" value="Log restaurant" onClick={logRestaurant()}/> */}
                 <div>
-                    <input type="button" value="Hide" onClick={this.hide.bind(this, "1")}/>
-                    <input type="button" value="Show" onClick={this.show.bind(this, "1")}/>
+                    <input type="button" className = "tableInputs" value="Hide" onClick={this.hide.bind(this, "1")}/>
+                    <input type="button" className = "tableInputs" value="Show" onClick={this.show.bind(this, "1")}/>
                     <input type="checkBox" defaultChecked/>
-                    <p>Only show currently open (doesn't work right now)</p>
+                    <p className = "tableP">Only show currently open (doesn't work right now)</p>
                 </div>
-                <input type="button" value="Name" onClick={this.sortName}/>
-                <input type="button" value="Wait" onClick={this.sortWait}/>
-                <input type="button" value="Crowd" onClick={this.sortCrowd}/>
-                <input type="button" value="Open" onClick={this.sortOpen}/>
-                <input type="button" value="Close" onClick={this.sortClose}/>
+                <input type="button" className = "tableInputs" value="Name" onClick={this.sortName}/>
+                <input type="button" className = "tableInputs" value="Wait" onClick={this.sortWait}/>
+                <input type="button" className = "tableInputs" value="Crowd" onClick={this.sortCrowd}/>
+                <input type="button" className = "tableInputs" value="Open" onClick={this.sortOpen}/>
+                <input type="button" className = "tableInputs" value="Close" onClick={this.sortClose}/>
                 <table id="table"> 
                     <tbody>
                     <tr id="0">
