@@ -6,6 +6,7 @@ import Slider from "../Slider/Slider";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Display from "../Display/Display";
+import Stopwatch from "../Stopwatch/Stopwatch"
 import { Routes, Route, Link} from "react-router-dom";
 import useToken from "./useToken"
 
@@ -29,6 +30,9 @@ function App() {
           <li>
             <Link to="/display"> Wait Line Display </Link>
           </li>
+          <li>
+            <Link to="/stopwatch"> Clock In/Out </Link>
+          </li>
         </ul>
       </nav>
     
@@ -44,6 +48,8 @@ function App() {
       <Route path="/profile" element={<Profile/>} />
 
       <Route path="/display" element={<Display/>} />
+
+      <Route path="/stopwatch" element={<Stopwatch/>} />
 
     </Routes>
 

@@ -4,7 +4,7 @@ body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
   background-color: #eceff1;
-  color: #010b40;
+  color: black;
 }
 
 .app {
@@ -43,10 +43,10 @@ p {
 button {
   outline: none;
   background: transparent;
-  border: 1px solid blue;
+  border: 1px solid rgb(140, 111, 171);
   padding: 5px 10px;
   border-radius: 7px;
-  color: blue;
+  color: rgb(140, 111, 171);
   cursor: pointer;
 }
 

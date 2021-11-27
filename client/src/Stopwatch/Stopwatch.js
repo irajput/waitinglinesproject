@@ -1,62 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Stopwatch.css';
+import Timer from "./Timer"
 
-function sendWait (time) {
+class Stopwatch extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          value: 'De Neve', 
+        };
+        sessionStorage.setItem('restaurant', 'De Neve')
+        this.handleChange = this.handleChange.bind(this);
+      }
+    
+    
+      handleChange(event) {
+          this.setState({value: event.target.value});
+          console.log(event.target.value);
+          sessionStorage.setItem('restaurant', JSON.stringify(event.target.value));
+      }
 
-}
+      render() {
+        return (
+            <div className="Stop">
+            <div className="Stopwatch">
+            <Timer />
+          </div>
+                <label>
+                    Which Dining Hall:
+                    <select value={this.state.value} onChange={this.handleChange}>
+                        <option value="DeNeve">De Neve</option>
+                        <option value="Rendezvous">Rendezvous</option>
+                        <option value="Study">The Study</option>
+                        <option value="Feast">Feast</option>
+                        <option value="BCafe">BCafe</option>
+                        <option value="Epic">Epicuria</option>
+                        <option value="Bplate">Bplate</option>
+                    </select>
+                </label>
+            </div>
+      );
+    }
+    }
 
-const Stopwatch = () => {
-  const [timer, setTimer] = useState(0)
-  const [isActive, setIsActive] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
-  const countRef = useRef(null)
-
-  const handleStart = () => {
-    // start button logic here
-    setIsActive(true)
-    setIsPaused(true)
-    countRef.current = setInterval(() => {
-        setTimer((timer) => timer + 1)
-    }, 1000)
-  }
-
-  const handlePause = () => {
-    // Pause button logic here
-    clearInterval(countRef.current)
-    setIsPaused(false)
-    sendWait(timer)
-  }
-
-  const handleResume = () => {
-    // Resume button logic here
-    setIsPaused(true)
-    countRef.current = setInterval(() => {
-    setTimer((timer) => timer + 1)
-  }, 1000)
-  }
-
-  const handleReset = () => {
-    // Reset button logic here
-    clearInterval(countRef.current)
-    setIsActive(false)
-    setIsPaused(false)
-    setTimer(0)
-  }
-
-  return (
-    <div className="Stopwatch">
-      <h3>React Stopwatch</h3>
-      <div className='stopwatch-card'>
-        <p>{timer}</p> {/* here we will show timer */}
-        <div className='buttons'>
-          <button onClick={handleStart}>Start</button>
-          <button onClick={handlePause}>Stop</button>
-          <button onClick={handleResume}>Resume</button>
-          <button onClick={handleReset}>Reset</button>
-        </div>
-      </div>
-    </div>
-  );
-}
+  
 
 export default Stopwatch;
