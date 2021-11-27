@@ -19,6 +19,17 @@ import React, { Component } from 'react';
 //     console.log(restaurants())
 //  }
 
+class RestaurantEntry {
+    constructor(name, wait = 10, crowd = 1, open = 12, close = 12) {
+        this.name = name;
+        this.wait = wait;
+        this.crowd = crowd;
+        this.open = open;
+        this.close = close;
+ }
+}
+
+
 class Table extends Component {
     constructor(props) {
         super(props);
@@ -27,20 +38,17 @@ class Table extends Component {
         this.sortCrowd = this.sortCrowd.bind(this);
         this.sortOpen = this.sortOpen.bind(this);
         this.sortClose = this.sortClose.bind(this);
+
+        var Rendezvous = new RestaurantEntry("Rendezvous")
+        var Study = new RestaurantEntry("Study")
+        var Feast = new RestaurantEntry("Feast")
+        var BCafe = new RestaurantEntry("BCafe")
+        var DeNeve = new RestaurantEntry("DeNeve")
+        var Epic = new RestaurantEntry("Epic")
+        var BPlate = new RestaurantEntry("BPlate")
         this.state = {
           sortedBy: "Name",
-          wait1: 3,
-          crowd1: 1,
-          open1: 13,
-          close1: 14,
-          wait2: 20,
-          crowd2: 2,
-          open2: 15,
-          close2: 6,
-          wait3: 15,
-          crowd3: 4,
-          open3: 8,
-          close3: 9,
+          restaurants: [Rendezvous, Study, Feast, BCafe, DeNeve, Epic, BPlate],
         } 
     }
 
@@ -171,26 +179,54 @@ class Table extends Component {
                 <input type="button" value="Close" onClick={this.sortClose}/>
                 <table id="table"> 
                     <tbody>
+                    <tr id="0">
+                        <td>{this.state.restaurants[0].name}</td>
+                        <td>{this.state.restaurants[0].wait}</td>
+                        <td>{this.state.restaurants[0].crowd}</td>
+                        <td>{this.state.restaurants[0].open}</td>
+                        <td>{this.state.restaurants[0].close}</td>
+                    </tr>
                     <tr id="1">
-                        <td>Hall 1</td>
-                        <td>{this.state.wait1}</td>
-                        <td>{this.state.crowd1}</td>
-                        <td>{this.state.open1}</td>
-                        <td>{this.state.close1}</td>
+                        <td>{this.state.restaurants[1].name}</td>
+                        <td>{this.state.restaurants[1].wait}</td>
+                        <td>{this.state.restaurants[1].crowd}</td>
+                        <td>{this.state.restaurants[1].open}</td>
+                        <td>{this.state.restaurants[1].close}</td>
                     </tr>
                     <tr id="2">
-                        <td>Hall 2</td>
-                        <td>{this.state.wait2}</td>
-                        <td>{this.state.crowd2}</td>
-                        <td>{this.state.open2}</td>
-                        <td>{this.state.close2}</td>
+                        <td>{this.state.restaurants[2].name}</td>
+                        <td>{this.state.restaurants[2].wait}</td>
+                        <td>{this.state.restaurants[2].crowd}</td>
+                        <td>{this.state.restaurants[2].open}</td>
+                        <td>{this.state.restaurants[2].close}</td>
                     </tr>
                     <tr id="3">
-                        <td>Hall 3</td>
-                        <td>{this.state.wait3}</td>
-                        <td>{this.state.crowd3}</td>
-                        <td>{this.state.open3}</td>
-                        <td>{this.state.close3}</td>
+                        <td>{this.state.restaurants[3].name}</td>
+                        <td>{this.state.restaurants[3].wait}</td>
+                        <td>{this.state.restaurants[3].crowd}</td>
+                        <td>{this.state.restaurants[3].open}</td>
+                        <td>{this.state.restaurants[3].close}</td>
+                    </tr>
+                    <tr id="4">
+                        <td>{this.state.restaurants[4].name}</td>
+                        <td>{this.state.restaurants[4].wait}</td>
+                        <td>{this.state.restaurants[4].crowd}</td>
+                        <td>{this.state.restaurants[4].open}</td>
+                        <td>{this.state.restaurants[4].close}</td>
+                    </tr>
+                    <tr id="5">
+                        <td>{this.state.restaurants[5].name}</td>
+                        <td>{this.state.restaurants[5].wait}</td>
+                        <td>{this.state.restaurants[5].crowd}</td>
+                        <td>{this.state.restaurants[5].open}</td>
+                        <td>{this.state.restaurants[5].close}</td>
+                    </tr>
+                    <tr id="6">
+                        <td>{this.state.restaurants[6].name}</td>
+                        <td>{this.state.restaurants[6].wait}</td>
+                        <td>{this.state.restaurants[6].crowd}</td>
+                        <td>{this.state.restaurants[6].open}</td>
+                        <td>{this.state.restaurants[6].close}</td>
                     </tr>
                     </tbody>
                 </table>
