@@ -3,6 +3,20 @@ import React, { Component } from 'react';
 
 //https://www.w3schools.com/howto/howto_js_sort_table.asp
 
+// async function restaurants() {
+//   return fetch('http://localhost:3001/restaurant', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//   })
+//     .then(data => data.json())
+//  }
+
+//  function logRestaurant() {
+//     console.log(restaurants())
+//  }
+
 class Table extends Component {
     constructor(props) {
         super(props);
@@ -141,6 +155,7 @@ class Table extends Component {
     render() {
         return (
             <div>
+                {/* <input type="button" value="Log restaurant" onClick={logRestaurant()}/> */}
                 <div>
                     <input type="button" value="Hide" onClick={this.hide.bind(this, "1")}/>
                     <input type="button" value="Show" onClick={this.show.bind(this, "1")}/>

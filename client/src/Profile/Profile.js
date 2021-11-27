@@ -1,10 +1,28 @@
 import './Profile.css';
 import Checkbox from './Checkbox';
 import Switch from './Switch';
+import getToken from '../App/App'
+
+// async function profile() {
+//   return fetch('http://localhost:3001/user/profile', {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'secret_token': getToken()
+//     },
+//   })
+//     .then(data => data.json())
+//  }
+
+//  function logProfile() {
+//    var data = profile()
+//    console.log(data)
+//  }
 
 function Profile() {
   return (
     <div className="profile">
+      {/* <input type="button" value="Log profile" onClick={logProfile()}/> */}
       <h1>Profile Page</h1>
       <h3>Receive notifications</h3>
       <Switch />
