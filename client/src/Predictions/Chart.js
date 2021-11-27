@@ -9,12 +9,12 @@ import {
 } from 'recharts';
 
 function Chart() {
-    predicts = sessionStorage.getItem('preds')
-    restaur = sessionStorage.getItem('restaurant')
+    let predicts = sessionStorage.getItem('preds')
+    let restaur = sessionStorage.getItem('restaurant')
     return (
         <>
             <h1 className="text-heading">
-                Predictions for ${restaur}
+                Predictions for {restaur}
             </h1>
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={predicts} margin={{ right: 300 }}>
