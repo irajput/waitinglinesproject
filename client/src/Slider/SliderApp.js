@@ -63,6 +63,20 @@ class HallForm extends React.Component {
     alert('You submitted data for: ' + this.state.value + " val: " + this.state.choice);
     event.preventDefault();
 
+    
+    return fetch('http://localhost:3001/restaurant/updateSlider', {
+    mode: 'no-cors',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'secret_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTEyNWM0YTVmZDJkNjM0NGQwNGE5OCJ9LCJpYXQiOjE2Mzc5ODg2NTR9.c2S3ITwUkUZ0P8_OL6a0Nc1GMUx6XQ2l2M-Fe9QFbW4'
+    },
+    body: {
+      name: this.state.value,
+      sliderNum: this.state.choice
+    }
+  })
+
   }
 
   render() {
