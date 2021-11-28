@@ -12,21 +12,31 @@ function setToken(userToken) {
 async function loginUser(memail, mpassword) {
   try {
     let body = {"email":memail,"password":mpassword,}
+    console.log(JSON.stringify(body))
+    let logger = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        //'Access-Control-Allow-Origin' : '*',
+      },
+      body: JSON.stringify(body),
+    })
+    .then(data => data.json())
+    console.log(logger);
+    return logger;
+    /*let body = {"email":memail,"password":mpassword,}
     console.log(body)
-    let res = await fetch('http://localhost:3001/login', {
-      mode: 'no-cors',
+    return fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: {"email":memail,"password":mpassword,},
     })
-    console.log(res.json());
-    return res.json();
+    .then(data => data.json())*/
   }
   catch (error) {
     await fetch('http://localhost:3001/signup', {
-      mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
