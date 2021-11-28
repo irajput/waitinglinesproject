@@ -1,31 +1,51 @@
 // client/src/Login.js
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import './Login.css';
 
-async function loginUser(credentials) {
-  return fetch('http://localhost:3000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
+function setToken(userToken) {
+  console.log(JSON.stringify(userToken))
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
 
-export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
+async function loginUser(email, password) {
+  try {
+    let body = {"email":email,"password":password,}
+    console.log(body)
+    return fetch('http://localhost:3001/login', {
+      mode: 'no-cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {"email":email,"password":password,},
+    })
+    .then(data => data.json())
+  }
+  catch (error) {
+    fetch('http://localhost:3001/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {"email":email,"password":password}
+    })
+    .then(data => data.json())
+    return loginUser(email, password);
+  }
+}
+
+export default function Login() {
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
+    const token = await loginUser(
+      email,
+      password);
+    console.log("Got token");
     setToken(token);
   }
 
@@ -35,20 +55,16 @@ export default function Login({ setToken }) {
         <form onSubmit={handleSubmit}>
         <label>
             <p>Username</p>
-            <input type="text" onChange={e => setUserName(e.target.value)}/>
+            <input type="text" onChange={e => setEmail(e.target.value)}/>
         </label>
         <label>
             <p>Password</p>
             <input type="password" onChange={e => setPassword(e.target.value)}/>
         </label>
-        <div class="center">
+        <div className="center">
             <button type="submit">Submit</button>
         </div>
         </form>
     </div>
   )
-}
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
 }

@@ -48,6 +48,7 @@ class Table extends Component {
         this.sortCrowd = this.sortCrowd.bind(this);
         this.sortOpen = this.sortOpen.bind(this);
         this.sortClose = this.sortClose.bind(this);
+        this.toggleShowOpen = this.toggleShowOpen.bind(this);
 
         var Rendezvous = new RestaurantEntry("Rendezvous")
         var Study = new RestaurantEntry("Study")
@@ -58,8 +59,34 @@ class Table extends Component {
         var BPlate = new RestaurantEntry("BPlate")
         this.state = {
           sortedBy: "Name",
+          showingOnlyOpen: false,
           restaurants: [Rendezvous, Study, Feast, BCafe, DeNeve, Epic, BPlate],
-        } 
+        }
+    }
+
+    toggleShowOpen() {
+        if (this.state.showingOnlyOpen) {
+            console.log('showing closed');
+            this.setState({showingOnlyOpen: false});
+            var i;
+            for (i = 0; i < this.state.restaurants.length; i++)
+            {
+                this.show(i.toString())
+            }
+          }
+          else {
+            console.log('showing only open');
+            this.setState({showingOnlyOpen: true});
+            for (i = 0; i < this.state.restaurants.length; i++)
+            {
+                //TODO: compare current time to open_time and close_time to see what is open
+                var open_time = this.state.restaurants[i].open
+                var close_time = this.state.restaurants[i].close
+                var today = new Date();
+                var time = today.getHours() + ":" + today.getMinutes();
+                this.hide(i.toString())
+            }
+          }
     }
 
     sortName() {
@@ -177,10 +204,10 @@ class Table extends Component {
             <div>
                 <input type="button" value="Log restaurant" onClick={logRestaurant}/>
                 <div>
-                    <input type="button" className = "tableInputs" value="Hide" onClick={this.hide.bind(this, "1")}/>
-                    <input type="button" className = "tableInputs" value="Show" onClick={this.show.bind(this, "1")}/>
-                    <input type="checkBox" defaultChecked/>
-                    <p className = "tableP">Only show currently open (doesn't work right now)</p>
+                    {/* <input type="button" className = "tableInputs" value="Hide" onClick={this.hide.bind(this, "1")}/>
+                    <input type="button" className = "tableInputs" value="Show" onClick={this.show.bind(this, "1")}/> */}
+                    <input type="checkBox" onClick={this.toggleShowOpen}/>
+                    <p className = "tableP" >Only show currently open (doesn't work right now)</p>
                 </div>
                 <input type="button" className = "tableInputs" value="Name" onClick={this.sortName}/>
                 <input type="button" className = "tableInputs" value="Wait" onClick={this.sortWait}/>
