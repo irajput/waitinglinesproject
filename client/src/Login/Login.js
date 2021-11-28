@@ -13,26 +13,28 @@ async function loginUser(email, password) {
   try {
     let body = {"email":email,"password":password,}
     console.log(body)
-    return fetch('http://localhost:3001/login', {
-      mode: 'no-cors',
+    let thing = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":email,"password":password,},
+		body: JSON.stringify({"email":email,"password":password,}),
     })
-    .then(data => data.json())
+		.then(data => data.json())
+	  console.log(thing);
+	  return thing
   }
   catch (error) {
-    fetch('http://localhost:3001/signup', {
+    let thing = await fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":email,"password":password}
+		body: JSON.stringify({"email":email,"password":password}),
     })
     .then(data => data.json())
-    return loginUser(email, password);
+	  console.log(thing);
+	  return thing
   }
 }
 

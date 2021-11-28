@@ -13,9 +13,11 @@ const JWTStrategy = passJwt.Strategy;
 const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
 const app = express();
+const cors = require('cors');
 require('dotenv').config();
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
@@ -128,6 +130,7 @@ passport.use(
 );
 
 app.use((req,res,next) =>{
+	res.header("Accept", "*/*");
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
@@ -159,7 +162,7 @@ app.post(
 		try {
 		    if(err || !user){
 				console.log(err);
-				return new Error("An authentication error occured");
+				return res.json("An authentication error occurred");
 		    }
 		    req.login(
 				user,
