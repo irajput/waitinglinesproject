@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 
 
 async function profile() {
-  return fetch('http://localhost:3001/user/profile', {
+  return fetch('http://localhost:3001/user/testJWT', {
     mode: 'no-cors',
     method: 'GET',
     headers: {
@@ -26,6 +26,7 @@ async function profile() {
  const logProfile = async e => {
   e.preventDefault();
   console.log("logging profile")
+  console.log(getToken())
   const data = await profile()
     console.log("got it")
     console.log(data)
