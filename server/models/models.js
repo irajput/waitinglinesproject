@@ -120,14 +120,12 @@ PredictionSchema.methods.integrateValues = function(points){
 }
 
 PredictionSchema.methods.generatePrediction = function(points){
-	let d = new Date();
-	let dayStart = new Date(d.getFullYear(),d.getMonth(),d.getDate(),0,0,0,0);
 	let predictionList = [];
 	// populate the list with the current values of the day
 	for(let i in points){
 		if(points[i].elements.length > 0)
 			predictionList.push([
-				points[i].time - dayStart,
+				points[i].time,
 				points[i].total/points[i].elements.length,
 			]);
 	}

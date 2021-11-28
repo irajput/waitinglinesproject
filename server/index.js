@@ -127,7 +127,12 @@ passport.use(
     )
 );
 
- 
+app.use((req,res,next) =>{
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+	next();
+});
 
 //////////////////
 // Routing code //
@@ -174,7 +179,7 @@ app.post(
 app.get(
 	"/prediction",
 	(req,res) => {
-		const resturaunt = req.query.resturant; 
+		const resturaunt = req.body.resturant; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({
@@ -194,7 +199,7 @@ app.get(
 app.get(
 	"/waitTime",
 	(req,res) => {
-		const resturaunt = req.query.resturaunt; 
+		const resturaunt = req.body.resturaunt; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({
@@ -254,7 +259,7 @@ secureRoots.post(
     '/recordTime',
     async (req,res,next) => {
 		// get our field inputs
-		const restauraunt = req.body.resturant; // which resturant the user was waiting for
+		const restauraunt = req.body.restaurant; // which resturant the user was waiting for
 		const timeDuration = +req.body.timeDuration; // how long they waited in seconds(can be changed to millis later)
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === restauraunt) === -1){
