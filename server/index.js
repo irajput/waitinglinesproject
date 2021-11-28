@@ -13,11 +13,9 @@ const JWTStrategy = passJwt.Strategy;
 const ExtractJWT = passJwt.ExtractJwt;
 const PORT = process.env.PORT || 3001;
 const app = express();
-const cors = require('cors');
 require('dotenv').config();
 app.use(express.json());
 app.use(passport.initialize());
-app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
