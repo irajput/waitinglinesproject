@@ -4,20 +4,12 @@ import "./App.css";
 import Home from "../Home/Home";
 import Slider from "../Slider/SliderApp";
 import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import Display from "../Display/Display";
 import { Routes, Route, Link} from "react-router-dom";
+import useToken from "./useToken"
 
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
-
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
-
-
-function App() {  
+function App() {
   return (
     <div className ="WaitApp"> 
     <nav>
@@ -31,6 +23,12 @@ function App() {
           <li>
             <Link to="/slider"> Slider </Link>
           </li>
+          <li>
+            <Link to="/profile"> Profile </Link>
+          </li>
+          <li>
+            <Link to="/display"> Wait Line Display </Link>
+          </li>
         </ul>
       </nav>
     
@@ -43,15 +41,16 @@ function App() {
 
       <Route path="/slider" element={<Slider/>} />
 
+      <Route path="/profile" element={<Profile/>} />
+
+      <Route path="/display" element={<Display/>} />
+
     </Routes>
 
     </div>
    
     
     </div>
-
-
-
   );
 }
 
