@@ -17,11 +17,19 @@ async function profile() {
     .then(data => data.json())
  }
 
- function logProfile() {
-   console.log("logging profile")
-   var data = profile()
-   console.log(data)
- }
+//  function logProfile() {
+//    console.log("logging profile")
+//    var data = profile()
+//    console.log(data)
+//  }
+
+ const logProfile = async e => {
+  e.preventDefault();
+  console.log("logging profile")
+  const data = await profile()
+    console.log("got it")
+    console.log(data)
+  }
 
  class Profile extends Component {
   // constructor(props) {

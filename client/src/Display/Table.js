@@ -9,16 +9,25 @@ async function restaurants() {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
     // body: {"name": "Bruin Plate"},
   })
     .then(data => data.json())
  }
 
- function logRestaurant() {
+//  function logRestaurant() {
+//     var restaurant = await restaurants()
+//     console.log("logging restaurant")
+//     console.log(restaurant)
+//  }
+
+ const logRestaurant = async e => {
+    e.preventDefault();
     console.log("logging restaurant")
-    console.log(restaurants())
- }
+    const restaurant = await restaurants()
+      console.log("got it")
+      console.log(restaurant)
+  }
 
 class RestaurantEntry {
     constructor(name, wait = 10, crowd = 1, open = 12, close = 12) {
