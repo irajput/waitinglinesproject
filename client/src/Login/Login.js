@@ -5,34 +5,35 @@ import React, { useState } from 'react';
 import './Login.css';
 
 function setToken(userToken) {
-  console.log(JSON.stringify(userToken))
-  sessionStorage.setItem('token', JSON.stringify(userToken));
+  console.log(userToken)
+  sessionStorage.setItem('token', userToken);
 }
 
-async function loginUser(email, password) {
+async function loginUser(memail, mpassword) {
   try {
-    let body = {"email":email,"password":password,}
+    let body = {"email":memail,"password":mpassword,}
     console.log(body)
-    return fetch('http://localhost:3001/login', {
+    let res = await fetch('http://localhost:3001/login', {
       mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":email,"password":password,},
+      body: {"email":memail,"password":mpassword,},
     })
-    .then(data => data.json())
+    console.log(res.json());
+    return res.json();
   }
   catch (error) {
-    fetch('http://localhost:3001/signup', {
+    await fetch('http://localhost:3001/signup', {
+      mode: 'no-cors',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":email,"password":password}
+      body: {"email":memail,"password":mpassword}
     })
-    .then(data => data.json())
-    return loginUser(email, password);
+    return loginUser(memail, mpassword);
   }
 }
 
@@ -46,7 +47,8 @@ export default function Login() {
       email,
       password);
     console.log("Got token");
-    setToken(token);
+    sessionStorage.setItem('token', token);
+    //setToken(token);
   }
 
   return(

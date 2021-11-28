@@ -9,7 +9,7 @@ class Predictions extends React.Component {
           preds: [], 
         };
         sessionStorage.setItem('restaurant', 'De Neve')
-        sessionStorage.setItem('preds', [])
+        sessionStorage.setItem('preds', JSON.stringify([]))
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
       }
@@ -28,13 +28,13 @@ class Predictions extends React.Component {
         
         let mpreds =  fetch('http://localhost:3001/prediction', {
         mode: 'no-cors',
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         body: {"restaurant":mrest,},
     })
-    sessionStorage.setItem('preds', mpreds);
+    sessionStorage.setItem('preds', JSON.stringify(mpreds));
 }
 
       render() {

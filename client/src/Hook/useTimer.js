@@ -3,11 +3,13 @@ import { useState, useRef } from 'react';
 function sendWait (time) {
     let rest = sessionStorage.getItem('restaurant')
     console.log(rest)
-    fetch('http://localhost:3001/recordTime', {
+    let mtoken = sessionStorage.getItem('token')
+    fetch('http://localhost:3001/user/recordTime', {
       mode: 'no-cors',
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'token': mtoken,
       },
       body: {"restaurant":rest,"timeDuration":time,},
     })
