@@ -9,41 +9,32 @@ function setToken(userToken) {
   sessionStorage.setItem('token', userToken);
 }
 
-async function loginUser(memail, mpassword) {
+async function loginUser(email, password) {
   try {
-    let body = {"email":memail,"password":mpassword,}
-    console.log(JSON.stringify(body))
-    let logger = await fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        //'Access-Control-Allow-Origin' : '*',
-      },
-      body: JSON.stringify(body),
-    })
-    .then(data => data.json())
-    console.log(logger);
-    return logger;
-    /*let body = {"email":memail,"password":mpassword,}
+    let body = {"email":email,"password":password,}
     console.log(body)
-    return fetch('http://localhost:3001/login', {
+    let thing = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":memail,"password":mpassword,},
+		body: JSON.stringify({"email":email,"password":password,}),
     })
-    .then(data => data.json())*/
+		.then(data => data.json())
+	  console.log(thing);
+	  return thing
   }
   catch (error) {
-    await fetch('http://localhost:3001/signup', {
+    let thing = await fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":memail,"password":mpassword}
+		body: JSON.stringify({"email":email,"password":password}),
     })
-    return loginUser(memail, mpassword);
+    .then(data => data.json())
+	  console.log(thing);
+	  return thing
   }
 }
 
@@ -58,7 +49,7 @@ export default function Login() {
       password);
     console.log("Got token");
     sessionStorage.setItem('token', token);
-    //setToken(token);
+    setToken(token);
   }
 
   return(
