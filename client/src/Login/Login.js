@@ -10,7 +10,7 @@ function setToken(userToken) {
 }
 
 async function loginUser(email, password) {
-  try {
+  //try {
     let body = {"email":email,"password":password,}
     console.log(body)
     let thing = await fetch('http://localhost:3001/login', {
@@ -22,9 +22,22 @@ async function loginUser(email, password) {
     })
 		.then(data => data.json())
 	  console.log(thing);
+    if (thing == "An authentication error occurred") {
+      console.log("signing up")
+      let thing = await fetch('http://localhost:3001/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"email":email,"password":password}),
+    })
+    .then(data => data.json())
+	  //console.log(thing);
+	  return loginUser(email,password);
+    }
 	  return thing
-  }
-  catch (error) {
+  //}
+  /*catch (error) {
     let thing = await fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: {
@@ -33,9 +46,9 @@ async function loginUser(email, password) {
 		body: JSON.stringify({"email":email,"password":password}),
     })
     .then(data => data.json())
-	  console.log(thing);
-	  return thing
-  }
+	  //console.log(thing);
+	  return loginUser(email,password);
+  }*/
 }
 
 export default function Login() {
