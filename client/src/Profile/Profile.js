@@ -6,30 +6,54 @@ import React, { Component } from 'react';
 
 
 async function profile() {
-  return fetch('http://localhost:3001/user/testJWT', {
-    mode: 'no-cors',
+  // 'http://localhost:3001/user/profile'
+  return fetch('http://localhost:3001/user/profile', {
+    // mode: 'no-cors',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'secret_token': getToken()
+      // 'secret_token': getToken()
+      'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
     }
   })
-    .then(data => data.json())
+  .then(data => {console.log(data)});
+    // .then(data => data.json())
  }
 
-//  function logProfile() {
-//    console.log("logging profile")
-//    var data = profile()
-//    console.log(data)
-//  }
+//  async function profile() {
+//   let response = await fetch('http://localhost:3001/login', 
+//   {mode: 'no-cors', method: 'POST',});
+
+//   console.log(response); 
+// }
+
+// const axios = require('axios');
+
+// async function profile() {
+
+//   const config = {
+//     method: 'get',
+//     mode: 'no-cors',
+//     url: 'http://localhost:3001/user/testJWT'
+// }
+
+// // const config = {
+// //   method: 'get',
+// //   url: 'http://webcode.me'
+// // }
+
+//   let res = await axios(config);
+//   console.log(res);
+//   // let data = res.data;
+//   // console.log(data);
+// }
 
  const logProfile = async e => {
   e.preventDefault();
   console.log("logging profile")
-  console.log(getToken())
   const data = await profile()
-    console.log("got it")
-    console.log(data)
+  console.log("got it")
+  console.log(data)
   }
 
  class Profile extends Component {

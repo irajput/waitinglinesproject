@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 
 async function restaurants() {
   return fetch('http://localhost:3001/restaurant/profile', {
-    mode: 'no-cors',
+    // mode: 'no-cors',
     method: 'GET',
     headers: {
         'Content-Type': 'application/json'
