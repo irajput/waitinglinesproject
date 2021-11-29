@@ -11,11 +11,13 @@ const jwt = require("jsonwebtoken");
 const passJwt = require('passport-jwt');
 const JWTStrategy = passJwt.Strategy;
 const ExtractJWT = passJwt.ExtractJwt;
+const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const app = express();
 require('dotenv').config();
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
@@ -121,13 +123,22 @@ passport.use(
 	    try{
 		return next(null,token.user);
 	    } catch (error) {
+		console.log(error.stack);
 		next(error);
 	    }
 	}
     )
 );
-
+app.all("*", (req, res, next) => {
+    console.log(req); // do anything you want here
+    console.log(req.headers);
+    next();
+});
  
+app.use((err,req,res,next) => {
+    console.error(err.stack);
+    res.status(500).json("thing happened");
+});
 
 //////////////////
 // Routing code //
