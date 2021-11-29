@@ -1,3 +1,4 @@
+import React, {useState, useEffect} from "react"
 import {
     LineChart,
     ResponsiveContainer,
@@ -8,9 +9,25 @@ import {
     CartesianGrid
 } from 'recharts';
 
-function Chart() {
-    let predicts = sessionStorage.getItem('preds')
-    let restaur = sessionStorage.getItem('restaurant')
+async function Chart() {
+    //const [posts, setPosts] = useState([]);
+    let restaur = String(sessionStorage.getItem('restaurant'));
+    console.log(restaur)
+    const predurl1 = "http://localhost:3001/prediction?resturant="
+    const predurl =  predurl1.concat(restaur)
+    console.log(predurl)
+        
+    let mpreds =  await fetch(predurl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+    })
+    //setPosts(mpreds.data);
+    //console.log(posts)
+    sessionStorage.setItem('preds', JSON.stringify(mpreds.data));
+    let predicts = JSON.parse(sessionStorage.getItem('preds'))
+    console.log("Hi" + predicts)
     return (
         <>
             <h1 className="text-heading">

@@ -5,10 +5,10 @@ class Predictions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          value: 'De Neve',
+          value: 'DeNeve',
           preds: [], 
         };
-        sessionStorage.setItem('restaurant', 'De Neve')
+        sessionStorage.setItem('restaurant', 'DeNeve')
         sessionStorage.setItem('preds', JSON.stringify([]))
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,19 +21,20 @@ class Predictions extends React.Component {
           sessionStorage.setItem('restaurant', event.target.value);
       }
 
-      handleSubmit(event) {
+      async handleSubmit(event) {
         event.preventDefault();
         let mrest = sessionStorage.getItem('restaurant')
         console.log(mrest)
+
+        let predurl = 'http://localhost:3001/prediction?resturant=' + {mrest}
         
-        let mpreds =  fetch('http://localhost:3001/prediction', {
-        mode: 'no-cors',
+        let mpreds =  await fetch(predurl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: {"restaurant":mrest,},
     })
+    console.log(mpreds)
     sessionStorage.setItem('preds', JSON.stringify(mpreds));
 }
 

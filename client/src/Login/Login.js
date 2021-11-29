@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 
 import './Login.css';
 
-function setToken(userToken) {
+/*function setToken(userToken) {
   console.log(userToken)
   sessionStorage.setItem('token', userToken);
-}
+}*/
 
 async function loginUser(email, password) {
   //try {
@@ -22,7 +22,7 @@ async function loginUser(email, password) {
     })
 		.then(data => data.json())
 	  console.log(thing);
-    if (thing == "An authentication error occurred") {
+    if (thing === "An authentication error occurred") {
       console.log("signing up")
       let thing = await fetch('http://localhost:3001/signup', {
       method: 'POST',
@@ -62,7 +62,6 @@ export default function Login() {
       password);
     console.log("Got token");
     sessionStorage.setItem('token', token);
-    setToken(token);
   }
 
   return(
