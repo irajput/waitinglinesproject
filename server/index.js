@@ -11,11 +11,13 @@ const jwt = require("jsonwebtoken");
 const passJwt = require('passport-jwt');
 const JWTStrategy = passJwt.Strategy;
 const ExtractJWT = passJwt.ExtractJwt;
+const cors = require('cors');
 const PORT = process.env.PORT || 3001;
 const app = express();
 require('dotenv').config();
 app.use(express.json());
 app.use(passport.initialize());
+app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
@@ -121,13 +123,17 @@ passport.use(
 	    try{
 		return next(null,token.user);
 	    } catch (error) {
+		console.log(error.stack);
 		next(error);
 	    }
 	}
     )
 );
-
  
+app.use((err,req,res,next) => {
+    console.error(err.stack);
+    res.status(500).json("Error");
+});
 
 //////////////////
 // Routing code //
@@ -174,7 +180,7 @@ app.post(
 app.get(
 	"/prediction",
 	(req,res) => {
-		const resturaunt = req.body.resturant; 
+		const resturaunt = req.query.restaurant; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({
