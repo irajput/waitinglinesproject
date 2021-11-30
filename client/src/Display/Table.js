@@ -8,7 +8,8 @@ async function restaurants() {
     // mode: 'no-cors',
     method: 'GET',
     headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
     },
     // body: {"name": "Bruin Plate"},
   })

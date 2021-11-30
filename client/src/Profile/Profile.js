@@ -6,9 +6,7 @@ import React, { Component } from 'react';
 
 
 async function profile() {
-  // 'http://localhost:3001/user/profile'
   return fetch('http://localhost:3001/user/profile', {
-    // mode: 'no-cors',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -16,37 +14,9 @@ async function profile() {
       'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
     }
   })
-  .then(data => {console.log(data)});
-    // .then(data => data.json())
+  // .then(data => {console.log(data)});
+    .then(data => data.json())
  }
-
-//  async function profile() {
-//   let response = await fetch('http://localhost:3001/login', 
-//   {mode: 'no-cors', method: 'POST',});
-
-//   console.log(response); 
-// }
-
-// const axios = require('axios');
-
-// async function profile() {
-
-//   const config = {
-//     method: 'get',
-//     mode: 'no-cors',
-//     url: 'http://localhost:3001/user/testJWT'
-// }
-
-// // const config = {
-// //   method: 'get',
-// //   url: 'http://webcode.me'
-// // }
-
-//   let res = await axios(config);
-//   console.log(res);
-//   // let data = res.data;
-//   // console.log(data);
-// }
 
  const logProfile = async e => {
   e.preventDefault();
