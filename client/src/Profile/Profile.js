@@ -58,7 +58,7 @@ async function profile() {
           <div id = "notification-opts" disabled>
             <h3>Maximum wait time (minutes):</h3>
             <p>Once the wait time at a restaurant drops below this threshold, you will be notified. </p>
-            <input type="number" id="wait-min" name="wait-min" min="1" max="60" />
+            <input type="number" id="wait-min" name="wait-min" min="1" max="60" defaultValue="30"/>
             <h3>Receive notifications for these restaurants:</h3>
             <div id="outer">
                 <Checkbox className = "inner" id = "0"/>
