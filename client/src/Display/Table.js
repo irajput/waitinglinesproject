@@ -18,13 +18,13 @@ async function restaurants(restaurantName) {
  }
 
  // For testing purposes
- const logRestaurant = async e => {
-    e.preventDefault();
-    console.log("logging restaurant")
-    const restaurant = await restaurants("Bruin Plate")
-      console.log("got it")
-      console.log(restaurant)
-  }
+//  const logRestaurant = async e => {
+//     e.preventDefault();
+//     console.log("logging restaurant")
+//     const restaurant = await restaurants("Bruin Plate")
+//       console.log("got it")
+//       console.log(restaurant)
+//   }
 
 class RestaurantEntry {
     constructor(name, wait = 10, crowd = 0, open = "11 AM", close = "1 PM") {

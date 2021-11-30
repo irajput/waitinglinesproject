@@ -23,7 +23,7 @@ class Checkbox extends Component {
     render() {
         return (
             <label>
-              <input type="checkbox" onClick={this.toggle}/>
+              <input type="checkbox" onClick={this.toggle} defaultChecked/>
             </label>
         );
       }
