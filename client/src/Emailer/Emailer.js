@@ -54,6 +54,10 @@ class Emailer extends Component {
         }
     }
 
+    async getPreferences() {
+        //TODO: Find how to get preferences
+    }
+
     async sendEmail() {
         console.log("sending email")
         const data = await profile();
@@ -61,7 +65,7 @@ class Emailer extends Component {
         email(email);
       }
 
-      shouldSendEmail() {
+    async shouldSendEmail() {
           //TODO: get conditions for sending email
         return false;
       }

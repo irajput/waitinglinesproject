@@ -1,7 +1,6 @@
 import './Profile.css';
-import Checkbox from './Checkbox';
 import Switch from './Switch';
-import getToken from '../App/App'
+// import getToken from '../App/App'
 import React, { Component } from 'react';
 
 
@@ -14,30 +13,46 @@ async function profile() {
       'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
     }
   })
-  // .then(data => {console.log(data)});
     .then(data => data.json())
  }
 
- const logProfile = async e => {
-  e.preventDefault();
-  console.log("logging profile")
-  const data = await profile()
-  console.log("got it")
-  console.log(data)
-  }
+//  const logProfile = async e => {
+//   e.preventDefault();
+//   console.log("logging profile")
+//   const data = await profile()
+//   console.log("got it")
+//   console.log(data)
+//   }
 
  class Profile extends Component {
   constructor(props) {
       super(props);
 
       this.postProfileChanges = this.postProfileChanges.bind(this);
+      this.getProfile = this.getProfile.bind(this);
   
       // this.state = {
       //   
       // } 
   }
 
+  getProfile() {
+    //TODO: Find how to get profile preferences
+    var maxWaitInput = document.getElementById("wait-min");
+    maxWaitInput.value = "40";
+    for (var i = 0; i < 7; i++) {
+      console.log(i.toString());
+      var checkboxInput = document.getElementById(i.toString());
+      console.log(checkboxInput);
+      if (i === 3 || i === 4)
+      {
+        checkboxInput.checked = false;
+      }
+    }
+  }
+
   postProfileChanges() {
+    //TODO: Find how to update profile preferences
     console.log("posting profile changes");
     var maxWaitInput = document.getElementById("wait-min");
     var maxWait = maxWaitInput.value;
@@ -47,7 +62,8 @@ async function profile() {
   render() {
     return (
       <div className="profile">
-        <input type="button" value="Log profile" onClick={logProfile}/>
+        {/* <input type="button" value="Log profile" onClick={logProfile}/> */}
+        <input type="button" value="Get Profile" onClick={this.getProfile}/>
         <h1>Profile Page</h1>
         <input type="button" value="Submit Changes" onClick={this.postProfileChanges}/>
         <h3>Receive notifications</h3>
@@ -61,31 +77,31 @@ async function profile() {
             <input type="number" id="wait-min" name="wait-min" min="1" max="60" defaultValue="30"/>
             <h3>Receive notifications for these restaurants:</h3>
             <div id="outer">
-                <Checkbox className = "inner" id = "0"/>
+                <input type="checkBox"  className = "inner" id = "0" defaultChecked/>
                 <p className = "inner"> Bruin Cafe </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "1"/>
-                <p className = "inner"> Bruin Plate </p>
+              <input type="checkBox"  className = "inner" id = "1" defaultChecked/>
+              <p className = "inner"> Bruin Plate </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "2"/>
+            <input type="checkBox"  className = "inner" id = "2" defaultChecked/>
                 <p className = "inner"> De Neve </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "3"/>
+            <input type="checkBox"  className = "inner" id = "3" defaultChecked/>
                 <p className = "inner"> Epicuria </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "4"/>
+            <input type="checkBox"  className = "inner" id = "4" defaultChecked/>
                 <p className = "inner"> Feast </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "5"/>
+            <input type="checkBox"  className = "inner" id = "5" defaultChecked/>
                 <p className = "inner"> Rendezvous </p>
             </div>
             <div id="outer">
-                <Checkbox className = "inner" id = "6"/>
+            <input type="checkBox"  className = "inner" id = "6" defaultChecked/>
                 <p className = "inner"> The Study </p>
             </div>
           </div>
