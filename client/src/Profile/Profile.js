@@ -28,22 +28,17 @@ async function profile() {
   constructor(props) {
       super(props);
 
-      this.postProfileChanges = this.postProfileChanges.bind(this);
-      this.getProfile = this.getProfile.bind(this);
-  
-      // this.state = {
-      //   
-      // } 
+      this.postProfileChanges = this.postProfile.bind(this);
+      this.getProfile = this.updateProfilePage.bind(this);
   }
 
-  getProfile() {
+  updateProfilePage() {
+    console.log("updating profile page")
     //TODO: Find how to get profile preferences
     var maxWaitInput = document.getElementById("wait-min");
     maxWaitInput.value = "40";
     for (var i = 0; i < 7; i++) {
-      console.log(i.toString());
       var checkboxInput = document.getElementById(i.toString());
-      console.log(checkboxInput);
       if (i === 3 || i === 4)
       {
         checkboxInput.checked = false;
@@ -51,21 +46,27 @@ async function profile() {
     }
   }
 
-  postProfileChanges() {
-    //TODO: Find how to update profile preferences
+  postProfile() {
     console.log("posting profile changes");
     var maxWaitInput = document.getElementById("wait-min");
     var maxWait = maxWaitInput.value;
-    
+    var restaurantPrefs = [];
+    for (var i = 0; i < 7; i++) {
+      var checkboxInput = document.getElementById(i.toString());
+      restaurantPrefs.push(checkboxInput.checked)
+    }
+    console.log(maxWait)
+    console.log(restaurantPrefs)
+    //TODO: Find how to update profile preferences
   }
 
   render() {
     return (
       <div className="profile">
         {/* <input type="button" value="Log profile" onClick={logProfile}/> */}
-        <input type="button" value="Get Profile" onClick={this.getProfile}/>
+        <input type="button" value="Get Profile" onClick={this.updateProfilePage}/>
         <h1>Profile Page</h1>
-        <input type="button" value="Submit Changes" onClick={this.postProfileChanges}/>
+        <input type="button" value="Submit Changes" onClick={this.postProfile}/>
         <h3>Receive notifications</h3>
         <p>Notifications will be sent to the email tied to your account. </p>
         <Switch />

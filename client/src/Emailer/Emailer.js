@@ -56,6 +56,7 @@ class Emailer extends Component {
 
     async getPreferences() {
         //TODO: Find how to get preferences
+        return [30, [true,true,true,false,false,true,true]]
     }
 
     async sendEmail() {
@@ -66,7 +67,16 @@ class Emailer extends Component {
       }
 
     async shouldSendEmail() {
-          //TODO: get conditions for sending email
+        var preferences = this.getPreferences();
+        var waitTime = preferences[0];
+        var notificationPreferences = preferences[1];
+        //TODO: how to get restaurant wait times
+        var restaurantWaitTimes = [10, 20, 30, 40, 50, 60, 70]
+        for (var i = 0; i < 7; i++) {
+            if (notificationPrefernces[i] && restaurantWaitTimes[i] <= waitTime) {
+                return true;
+            }
+        }
         return false;
       }
 
