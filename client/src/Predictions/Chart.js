@@ -9,25 +9,29 @@ import {
     CartesianGrid
 } from 'recharts';
 
-async function Chart() {
+function Chart() {
     //const [posts, setPosts] = useState([]);
     let restaur = String(sessionStorage.getItem('restaurant'));
     console.log(restaur)
-    const predurl1 = "http://localhost:3001/prediction?resturant="
+    let predicts = sessionStorage.getItem('preds');
+    predicts = [1,2,3,4,5]
+    console.log("Hi" + predicts)
+    const predurl1 = "http://localhost:3001/prediction?restaurant="
     const predurl =  predurl1.concat(restaur)
     console.log(predurl)
         
-    let mpreds =  await fetch(predurl, {
+    /*let mpreds =  await fetch(predurl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-    })
+    })*/
     //setPosts(mpreds.data);
-    //console.log(posts)
-    sessionStorage.setItem('preds', JSON.stringify(mpreds.data));
-    let predicts = JSON.parse(sessionStorage.getItem('preds'))
-    console.log("Hi" + predicts)
+    /*console.log(mpreds)
+    sessionStorage.setItem('preds', JSON.stringify(mpreds.response));
+    let predicts = sessionStorage.getItem('preds')*/
+    //let predicts = sessionStorage.getItem('preds');
+    //console.log("Hi" + predicts)
     return (
         <>
             <h1 className="text-heading">

@@ -1,20 +1,21 @@
 import { useState, useRef } from 'react';
 
-function sendWait (time) {
+async function sendWait (time) {
     let rest = sessionStorage.getItem('restaurant')
     console.log(rest)
-    let mtoken = sessionStorage.getItem('token')
-    fetch('http://localhost:3001/user/recordTime', {
-      mode: 'no-cors',
+    let body = {"restaurant":rest,"timeDuration":time,}
+    console.log(body)
+    let mtoken = sessionStorage.getItem('token');
+    console.log(mtoken)
+    let reco = await fetch('http://localhost:3001/user/recordTime', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'token': mtoken,
+        'secret_token': mtoken,
       },
-      body: {"restaurant":rest,"timeDuration":time,},
+      body: JSON.stringify(body),
     })
-    let body = {"restaurant":rest,"timeDuration":time,}
-    console.log(body)
+    console.log(reco);
 }
 
 const useTimer = (initialState = 0) => {

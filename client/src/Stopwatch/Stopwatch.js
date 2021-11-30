@@ -6,9 +6,9 @@ class Stopwatch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          value: 'De Neve', 
+          value: 'DeNeve', 
         };
-        sessionStorage.setItem('restaurant', 'De Neve')
+        sessionStorage.setItem('restaurant', 'DeNeve')
         this.handleChange = this.handleChange.bind(this);
       }
     

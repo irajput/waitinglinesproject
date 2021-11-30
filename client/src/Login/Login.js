@@ -21,7 +21,7 @@ async function loginUser(email, password) {
 		body: JSON.stringify({"email":email,"password":password,}),
     })
 		.then(data => data.json())
-	  console.log(thing);
+    console.log(thing)
     if (thing === "An authentication error occurred") {
       console.log("signing up")
       let thing = await fetch('http://localhost:3001/signup', {
@@ -35,7 +35,7 @@ async function loginUser(email, password) {
 	  //console.log(thing);
 	  return loginUser(email,password);
     }
-	  return thing
+	  return thing.token
   //}
   /*catch (error) {
     let thing = await fetch('http://localhost:3001/signup', {
