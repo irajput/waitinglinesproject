@@ -25,7 +25,7 @@ exports.createRestaurant = async function (req, res, next) {
 };
 
 exports.getRestaurantProfile = async function (req, res, next) {
-  let { name } = req.body;
+  let { name } = req.query;
  
   let restaurant = await restaurantModel.findOne({ name: name });
 
