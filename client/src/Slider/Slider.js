@@ -2,35 +2,6 @@
 import React from "react";
 import getToken from "../App/App"
 
-{/*
-
-export default function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const _handleIndexChange = (index) => {
-    setCurrentIndex(index);
-    console.log("index:" , index)
-
-  };
-
-  return (
-    <div className="App">
-      <div className="container">
-        <Step currentIndex={currentIndex} />
-      </div>
-      <Slider onChange={_handleIndexChange} currentIndex={currentIndex} />
-
-      <h1 className="whichDH"> Which Dining Hall: </h1>
-      <select className="dropdown">
-        <option selected value = "DeNeve">De Neve</option>
-        <option value = "Rende">Rendezvous</option>
-      </select>
-    </div>
-
-
-  );
-}
-*/}
 
 class HallForm extends React.Component {
   constructor(props) {
@@ -59,32 +30,11 @@ class HallForm extends React.Component {
     event.preventDefault();
     console.log(getToken());
     
-    {/*}
-    async function sliderUpdate(url = '', restaurant, sliderNum) {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers : {
-          'Content-Type': 'application/json',
-          'secret_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTEyNWM0YTVmZDJkNjM0NGQwNGE5OCJ9LCJpYXQiOjE2Mzc5ODg2NTR9.c2S3ITwUkUZ0P8_OL6a0Nc1GMUx6XQ2l2M-Fe9QFbW4'
-        },
-        body: {
-          "name": restaurant,
-          "sliderNum": sliderNum
-        }
-      });
-      return response.json()
-    }
-    
-    sliderUpdate('http://localhost:3001/restaurant/updateSlider', this.state.value, this.state.choice)
-      .then(data => { console.log(data) });
-  
-*/}
-    
     let body = {
       "name" : this.state.value,
       "sliderNum": this.state.choice
     };
-    try {
+    
     return fetch('http://localhost:3001/restaurant/updateSlider', {
       method: 'POST',
       headers: {
@@ -95,10 +45,7 @@ class HallForm extends React.Component {
 
        })
        .then(data => console.log(data))
-    }
-      catch {
-          alert('Try logging in first!')
-      }
+    
   }
 
   render() {
