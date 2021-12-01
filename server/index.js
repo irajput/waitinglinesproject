@@ -160,7 +160,7 @@ app.post(
 		try {
 		    if(err || !user){
 				console.log(err);
-				return new Error("An authentication error occured");
+				return res.json("An authentication error occurred");
 		    }
 		    req.login(
 				user,
