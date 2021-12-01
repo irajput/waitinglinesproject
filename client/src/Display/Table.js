@@ -34,6 +34,12 @@ async function restaurants(restaurantName) {
     console.log(restaurant)
   }
 
+  const logWait = async e => {
+    e.preventDefault();
+    const restaurant = await waitTime("Study")
+    console.log(restaurant)
+  }
+
 class RestaurantEntry {
     constructor(name, wait = 10, crowd = 0, open = "11 AM", close = "1 PM") {
         this.name = name;
@@ -288,6 +294,7 @@ class Table extends Component {
                 {/* <p>{countUp}</p> */}
                 <p className = "tableP">Updates every minute</p>
                 <input type="button" value="Log restaurant" onClick={logRestaurant}/>
+                <input type="button" value="Log wait time" onClick={logWait}/>
                 <div>
                     <input type="checkBox" onClick={this.toggleShowOpen} defaultChecked/>
                     <p className = "tableP">Only show currently open</p>
