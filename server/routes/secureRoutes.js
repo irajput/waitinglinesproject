@@ -6,7 +6,7 @@ const {
 	addToRestaurantNotifs
 } = require("../helpers/user");
 
-const {sendEmail}=require("../helpers/emails");
+//const {sendEmail}=require("../helpers/emails");
 
 secureRoots.get(
     '/testJWT',
@@ -19,6 +19,8 @@ secureRoots.get(
     }
 );
 secureRoots.get("/profile", profile); //the true path is user/profile
-secureRoots.post("/emails",sendEmail); //the true path is user/emails
+//secureRoots.post("/emails",sendEmail); //the true path is user/emails
 secureRoots.post("/addToRestaurantNotifs",addToRestaurantNotifs);
+
+
 module.exports = secureRoots;
