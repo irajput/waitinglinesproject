@@ -11,43 +11,34 @@ async function restaurants(restaurantName) {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
-        'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
+        'secret_token': sessionStorage.getItem('token'),
     },
   })
     .then(data => data.json())
  }
 
-//  async function waitTime(restaurantName) {
-//     return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'name': restaurantName}).toString(), {
-//       method: 'GET',
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-//       },
-//     })
-//       .then(data => data.json())
-//    }
-
-async function waitTime(restaurantName) {
-    return fetch('http://localhost:3001/waitTime', {
+ async function waitTime(restaurantName) {
+    return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'restaurant': restaurantName}).toString(), {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
-          'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-          'name': restaurantName
-        },
+      },
     })
       .then(data => data.json())
    }
 
- // For testing purposes
-//  const logRestaurant = async e => {
-//     e.preventDefault();
-//     console.log("logging restaurant")
-//     const restaurant = await restaurants("Bruin Plate")
-//       console.log("got it")
-//       console.log(restaurant)
-//   }
+//  For testing purposes
+ const logRestaurant = async e => {
+    e.preventDefault();
+    const restaurant = await restaurants("BCafe")
+    console.log(restaurant)
+  }
+
+  const logWait = async e => {
+    e.preventDefault();
+    const restaurant = await waitTime("Study")
+    console.log(restaurant)
+  }
 
 class RestaurantEntry {
     constructor(name, wait = 10, crowd = 0, open = "11 AM", close = "1 PM") {
@@ -59,10 +50,8 @@ class RestaurantEntry {
  }
 }
 
-// The names of the restaurants as needed for fetching from restaurant/profile
-const RESTAURANTNAMES = ["Bruin Plate"];
 // The codes for fetching from waitTime
-const RESTURAUNTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve","Epic"];
+const RESTAURANTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve","Epic"];
 
 class Table extends Component {
     constructor(props) {
@@ -127,18 +116,18 @@ class Table extends Component {
         // e.preventDefault();
         console.log("updating restaurant table");
         var newRestaurants = this.state.restaurants;
-        for (var i = 0; i < RESTAURANTNAMES.length; i++)
+        for (var i = 0; i < RESTAURANTCODES.length; i++)
         {
             try {
-                const updatedRestaurant = await restaurants(RESTAURANTNAMES[i]);
-                //TODO: restaurant wait time uses body
-                // const newWait = await waitTime(RESTURAUNTCODES[i]); 
-                // console.log(newWait);
+                const updatedRestaurant = await restaurants(RESTAURANTCODES[i]);
+                //TODO: try this when waitTime data is ready
+                // const newWait = await waitTime(RESTAURANTNAMES[i]);
+                // console.log(newWait) 
                 const newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;
                 const newClose = updatedRestaurant.restaurant.closeTime;
-                newRestaurants[i] = new RestaurantEntry(RESTAURANTNAMES[i], newWait, newCrowd, newOpen, newClose);
+                newRestaurants[i] = new RestaurantEntry(RESTAURANTCODES[i], newWait, newCrowd, newOpen, newClose);
                 this.setState({restaurants: newRestaurants});
             }
             catch {
@@ -304,7 +293,8 @@ class Table extends Component {
             <div>
                 {/* <p>{countUp}</p> */}
                 <p className = "tableP">Updates every minute</p>
-                {/* <input type="button" value="Log restaurant" onClick={logRestaurant}/> */}
+                <input type="button" value="Log restaurant" onClick={logRestaurant}/>
+                <input type="button" value="Log wait time" onClick={logWait}/>
                 <div>
                     <input type="checkBox" onClick={this.toggleShowOpen} defaultChecked/>
                     <p className = "tableP">Only show currently open</p>

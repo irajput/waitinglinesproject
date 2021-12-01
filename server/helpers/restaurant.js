@@ -73,7 +73,7 @@ exports.getRestaurantProfile = async function (req, res, next) {
       try{
         let user = await models.User.findOne({ _id: id });
         //console.log(user);
-        sendEmail(user.email);
+        sendEmail(user.email, name);
         //remove user's notified restaurants
         user = await models.User.findOneAndUpdate({ _id: id },{followingRestaurants:[]});
 

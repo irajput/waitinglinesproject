@@ -259,7 +259,7 @@ app.get(
 			res.json({
 				result: "Failure",
 				reason: "Invalid resturant code",
-				time: currChunk.total/currChunk.elements.length,
+				time: NaN,
 			});
 			return;
 		}
