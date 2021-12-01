@@ -37,16 +37,31 @@ let currentDayLists = {}
 // Cached prediction results, calculated every time we put a new chunk in
 // These are just lists of coordinate tuples for ease of use with observable.js
 let currentPredictions = {} 
-for(let i in RESTURAUNTCODES){
-	let val = RESTURAUNTCODES[i]
-	currentChunks[val] = {
-		total : 0,
-		elements : [],
-		time : 0,
-	};
-	currentDayLists[val] = [];
-	currentPredictions[val] = [];
+async function setup(){
+    for(let i in RESTURAUNTCODES){
+        let val = RESTURAUNTCODES[i];
+        let now = new Date();
+        let millis = now  - new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0,0);
+        let chunkCount = Math.floor(millis/(5*60*1000));
+        let dayOfWeek = now.getDay();
+        currentChunks[val] = {
+            total : 0,
+            elements : [],
+            time : 0,
+        };
+        currentDayLists[val] = [];
+        let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+        currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
+        for(let j = 0; j < chunkCount && j < currentPredictions[val].length; j++){
+            currentDayLists[val].push({
+                total : currentPredictions[val][j][1],
+                elements : ["prediction data"],
+                time : currentPredictions[val][j][0],
+            });
+        }
+    }
 }
+setup();
 const connectToDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -138,7 +153,6 @@ app.use((err,req,res,next) => {
 //////////////////
 // Routing code //
 //////////////////
-
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
@@ -331,6 +345,8 @@ async function pushDayBack(){
 				 modelsUsed:0,values : []});
 		}
 		histVals.integrateValues(currentDayLists[val]);
+		await histVals.save();
+		console.log(histVals);
 		currentDayLists[val] = [];
 		currentPredictions[val] = [];
 	}
