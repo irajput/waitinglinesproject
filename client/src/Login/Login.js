@@ -31,10 +31,10 @@ async function loginUser(email, password) {
       },
       body: JSON.stringify({"email":email,"password":password}),
     })
-    .then(data => data.json())
 	  //console.log(thing);
 	  return loginUser(email,password);
     }
+    console.log(thing.token);
 	  return thing.token
   //}
   /*catch (error) {
