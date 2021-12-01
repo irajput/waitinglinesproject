@@ -20,7 +20,7 @@ async function loginUser(email, password) {
 		.then(data => data.json())
     console.log(thing)
     if (thing === "An authentication error occurred") {
-      console.log("signing up")
+      /*console.log("signing up")
 
       await fetch('http://localhost:3001/signup', {
 
@@ -32,7 +32,8 @@ async function loginUser(email, password) {
     })
 
 	  //console.log(thing);
-	  return loginUser(email,password);
+	  return loginUser(email,password);*/
+    alert("Invalid credentials");
     }
     console.log(thing.token);
 	  return thing.token

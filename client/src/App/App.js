@@ -4,12 +4,12 @@ import "./App.css";
 import Home from "../Home/Home";
 import Slider from "../Slider/Slider";
 import Login from "../Login/Login";
+import Signup from "../Signup/Signup";
 import Profile from "../Profile/Profile";
 import Display from "../Display/Display";
 import Stopwatch from "../Stopwatch/Stopwatch"
 import Predictions from "../Predictions/Predictions"
 import { Routes, Route, Link} from "react-router-dom";
-import useToken from "./useToken"
 
 function App() {
   //if (sessionStorage.getItem('token') != null) {
@@ -38,6 +38,8 @@ function App() {
       <Route exact path="/" element={<Home/>} />
 
       <Route path="/login" element={<Login/>} />
+
+      <Route path="/signup" element={<Signup/>} />
 
       <Route path="/profile" element={<Profile/>} />
 
