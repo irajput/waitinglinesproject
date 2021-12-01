@@ -2,53 +2,6 @@ import React, { useState } from 'react';
 
 import '../Login/Login.css';
 
-/*async function hist(rest, days) {
-    let mhist =  await fetch('http://localhost:3001/history?' + new URLSearchParams({'name': rest, 'date': days}).toString(), {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(data => data.json())
-        if (mhist.message === "Failure") {
-            alert("Invalid Restaurant")
-        }
-        console.log(mhist)
-        
-}
-
-export default function History() {
-    const [restaurant, setRestaurant] = useState();
-    const [day, setDay] = useState();
-  
-    const handleSubmit = async e => {
-      e.preventDefault();
-      const token = await hist(
-        restaurant, day);
-      //sessionStorage.setItem('token', token);
-      //document.location.reload();
-    }
-  
-    return(
-      <div className="login-wrapper">
-        <h1>Please Log In</h1>
-          <form onSubmit={handleSubmit}>
-          <label>
-              <p>Restaurant</p>
-              <input type="text" onChange={e => setRestaurant(e.target.value)}/>
-          </label>
-          <label>
-              <p>Date (YYYY-MM-DD)</p>
-              <input type="text" onChange={e => setDay(e.target.value)}/>
-          </label>
-          <div className="center">
-              <button type="submit">Submit</button>
-          </div>
-          </form>
-      </div>
-    )
-  }*/
-
 import HChart from './HChart'
 
 class History extends React.Component {
@@ -90,6 +43,9 @@ class History extends React.Component {
         })
         .then(data => data.json())
         console.log(mhist)
+        if (mhist.message === 'Failure') {
+            alert('No data for given input');
+        }
         //console.log(mpreds.points)
         sessionStorage.setItem('hist', JSON.stringify(mhist.values));
         this.setState({
