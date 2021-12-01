@@ -72,13 +72,12 @@ PredictionSchema.methods.compareUnweighted = function(points){
 	// In the future, this may not be the case, so I record the time as well in the schema
 	let i = 0;
 	let totalDifference = 0;
-	console.log(points);
 	while(i < this.values.length && i < points.length){
 		if(points[i].elements.length > 0)
 			totalDifference += Math.abs(this.values[i].avgWaitTime - points[i].total/points[i].elements.length);
 		i++;
 	}
-	if(i === 0) return Infinity // If one of these is empty, they are infinitely far apart and we should do absolutely no predictions
+	if(i === 0) return 0 // If one of these is empty, they are infinitely far apart and we should do absolutely no predictions
 	return totalDifference/i; // Returns the average distance between each of the points
 }
 
@@ -86,6 +85,7 @@ PredictionSchema.methods.compareWeighted = function(points){
 	// Similar to compare unweighted, but does weights comparisons at the end more then comparisons at the start
 	let i = 0;
 	let totalDifference = 0;
+	if(points.length == 0) return 0;
 	while(i < this.values.length && i < points.length){
 		if(points[i].elements.length > 0)
 			totalDifference += (i+1)*Math.abs(this.values[i].avgWaitTime
@@ -110,28 +110,21 @@ PredictionSchema.methods.integrateValues = function(points){
 	while(i < this.values.length && i < points.length){
 		// Find a new average, ignoring empty chunks for now
 		// In the future, we might have enough users that an empty chunk can indicate no one was waiting for 5m
-		if(points[i].elements.length > 0)
+		if(this.values.length > 0)
 			this.values[i].avgWaitTime = (this.values[i].avgWaitTime*this.modelsUsed
 								+ points[i].total/points[i].elements.length)/(this.modelsUsed + 1);
 		i++;
 	}
 	while(i < points.length){
-		this.values[i].push({time:points[i].time,avgWaitTime:points[i].total/points[i].elements.length});
+		this.values.push({time:points[i].time,avgWaitTime:points[i].total/points[i].elements.length});
 		i++;
 	}
 	this.modelsUsed++;
+	console.log(this.values);
 }
 
 PredictionSchema.methods.generatePrediction = function(points){
 	let predictionList = [];
-	// populate the list with the current values of the day
-	for(let i in points){
-		if(points[i].elements.length > 0)
-			predictionList.push([
-				points[i].time,
-				points[i].total/points[i].elements.length,
-			]);
-	}
 	// Afterwards, we want to see how closely this works with our model, we do this via the weighted prediction.
 	let difference = this.compareWeighted(points);
 	let iterStep = 5*60*1000; // For now, iterate across the whole five minutes at once.
@@ -142,7 +135,27 @@ PredictionSchema.methods.generatePrediction = function(points){
 	// The number of steps we feel like we can confidently predict
 	let numSteps = difference == 0 ? Infinity : Math.floor(maxDifference/difference);
 	let startingLength = predictionList.length;
-	let nextTime = startingLength*maxDifference;
+	let nextTime = startingLength*iterStep;
+	// populate the list with the current values of the day
+	if(points.length == 0){
+		nextTime = 0;
+		// if points length is 0, we just show our historical data
+		for(let i = 0; i < this.values.length; i++){
+			predictionList.push([
+				nextTime,
+				this.values[i].avgWaitTime]);
+			nextTime += iterStep;
+		}
+		return predictionList;
+		
+	}
+	for(let i in points){
+		if(points[i].elements.length > 0)
+			predictionList.push([
+				points[i].time,
+				points[i].total/points[i].elements.length,
+			]);
+	}
 	for(let i = startingLength; i < maxIters && i < numSteps + startingLength; i++){
 		if(i > 1){ //if there are at least two values in prediction list
 			let val1 = predictionList[i-2];
@@ -171,5 +184,23 @@ function linearExtrapolate(x1,y1,x2,y2,x3){
 }
 const PredictionModel = mongoose.model('prediction',PredictionSchema);
 
+const HistSchema = mongoose.Schema({
+	restaurant: {
+		type:String,
+		required:true,
+	},
+	date: {
+		type:Date,
+		required:true,
+	},
+	values: {
+		type: [[Number]],
+		required:true,
+	}
+});
+
+const HistModel = mongoose.model('history',HistSchema);
+
 module.exports.User = UserModel;
 module.exports.Prediction = PredictionModel;
+module.exports.Hist = HistModel;

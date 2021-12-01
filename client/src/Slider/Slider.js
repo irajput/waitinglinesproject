@@ -26,26 +26,35 @@ class HallForm extends React.Component {
     this.setState({choice: event.target.value});
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     alert('You submitted data for: ' + this.state.value + " val: " + this.state.choice);
     event.preventDefault();
-    console.log(getToken());
+
+    let token = sessionStorage.getItem('token');
+    console.log(token)
     
     let body = {
       "name" : this.state.value,
       "sliderNum": this.state.choice
     };
     
-    return fetch('http://localhost:3001/restaurant/updateSlider', {
+    let resp =  await fetch('http://localhost:3001/restaurant/updateSlider', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'secret_token': sessionStorage.getItem('token')
+        'secret_token': token,
       },
       body: JSON.stringify(body)
 
        })
        .then(data => console.log(data))
+
+       if (token === null) {
+         alert("Try logging in first!");
+         return;
+       }
+
+       return resp;
     
   }
 

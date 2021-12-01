@@ -21,6 +21,7 @@ app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
+
 /////////////////////////////
 // Variable Initialization //
 /////////////////////////////
@@ -37,16 +38,37 @@ let currentDayLists = {}
 // Cached prediction results, calculated every time we put a new chunk in
 // These are just lists of coordinate tuples for ease of use with observable.js
 let currentPredictions = {} 
-for(let i in RESTURAUNTCODES){
-	let val = RESTURAUNTCODES[i]
-	currentChunks[val] = {
-		total : 0,
-		elements : [],
-		time : 0,
-	};
-	currentDayLists[val] = [];
-	currentPredictions[val] = [];
+async function setup(){
+	for(let i in RESTURAUNTCODES){
+		let val = RESTURAUNTCODES[i];
+		let now = new Date();
+		let millis = now  - new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0,0);
+		let chunkCount = Math.floor(millis/(5*60*1000));
+		let dayOfWeek = now.getDay();
+		currentChunks[val] = {
+			total : 0,
+			elements : [],
+			time : 0,
+		};
+		currentDayLists[val] = [];
+		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+		if(histVals == null){
+			histVals = await models.Prediction.create(
+				{dayOfWeek : dayOfWeek,
+				 resturantCode:val,
+				 modelsUsed:0,values : []});
+		}
+		currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
+		for(let j = 0; j < chunkCount && j < currentPredictions[val].length; j++){
+			currentDayLists[val].push({
+				total : currentPredictions[val][j][1],
+				elements : ["prediction data"],
+				time : currentPredictions[val][j][0],
+			});
+		}
+	}
 }
+setup();
 const connectToDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -138,7 +160,6 @@ app.use((err,req,res,next) => {
 //////////////////
 // Routing code //
 //////////////////
-
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
@@ -177,6 +198,38 @@ app.post(
 		}})(req,res,next);
     }
 );
+app.get(
+	"/history",
+	async (req,res) => {
+		let name = req.query.name;
+		let date = req.query.date;
+		await models.Hist.findOne({restaurant:name,date,date}).then(
+			(model) => {
+				if(!model){
+					res.json({
+						message: "Failure",
+						reason: "Couldn't find model matching values given",
+						values: []
+					});
+					return;
+				}
+				res.json({
+					message: "Success",
+					reason: "No issues",
+					values: model.values
+				});
+			}
+		).catch(
+			(err) => {
+				res.json({
+					message: "Failure",
+					reason: "An error occurred while processing your data",
+					values: []
+				});
+			}
+		);
+	}
+);	
 app.get(
 	"/prediction",
 	(req,res) => {
@@ -319,10 +372,11 @@ async function storeCurrChunks(){
 }
 cron.schedule('*/5 * * * *', storeCurrChunks);
 async function pushDayBack(){
+	let now = new Date()
+	let dayOfWeek = now.getDay();
+	let dateString = now.toISOString().split('T')[0];
 	for(let i in RESTURAUNTCODES){
 		let val = RESTURAUNTCODES[i]
-		let now = new Date()
-		let dayOfWeek = now.getDay();
 		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
 		if(histVals == null){
 			histVals = await models.Prediction.create(
@@ -331,6 +385,12 @@ async function pushDayBack(){
 				 modelsUsed:0,values : []});
 		}
 		histVals.integrateValues(currentDayLists[val]);
+		await histVals.save();
+		await models.Hist.create({
+			restaurant: val,
+			date: dateString,
+			values: currentDayLists[val],
+		});
 		currentDayLists[val] = [];
 		currentPredictions[val] = [];
 	}
