@@ -14,7 +14,7 @@ async function sendWait (time) {
         'secret_token': mtoken,
       },
       body: JSON.stringify(body),
-    })
+    }).then(data => data.json())
     console.log(reco);
 }
 
