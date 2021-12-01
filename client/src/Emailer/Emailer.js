@@ -56,8 +56,9 @@ class Emailer extends Component {
     async shouldSendEmail(restaurant) {
         var preferThisRestaurant = this.getPreferences(restaurant);
         var waitTimePreference = 30; //TODO: get this locally?
-        //TODO: how to get restaurant wait times
-        var waitTime = await waitTime(restaurant);
+        //TODO: try this when waitTime data ready
+        // var waitTime = await waitTime(restaurant);
+        var waitTime = 20;
         if (preferThisRestaurant && waitTime <= waitTimePreference) {
               return true;
         }
