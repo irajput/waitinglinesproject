@@ -35,6 +35,9 @@ function App() {
           <li>
             <Link to="/predictions"> Predictions </Link>
           </li>
+          <li>
+            <Link to="/slider"> Crowdedness </Link>
+          </li>
         </ul>
       </nav>
     
@@ -50,6 +53,8 @@ function App() {
       <Route path="/display" element={<Display/>} />
 
       <Route path="/stopwatch" element={<Stopwatch/>} />
+
+      <Route path="/slider" element={<Slider/>} />
 
       <Route path="/predictions" element={<Predictions/>} />
 
