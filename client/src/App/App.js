@@ -10,11 +10,13 @@ import Stopwatch from "../Stopwatch/Stopwatch"
 import Predictions from "../Predictions/Predictions"
 import { Routes, Route, Link} from "react-router-dom";
 import useToken from "./useToken"
+import Emailer from "../Emailer/Emailer"
 
 function App() {
   //if (sessionStorage.getItem('token') != null) {
   return (
     <div className ="App"> 
+    <Emailer />
     <nav>
         <ul id="navbar">
           <li>

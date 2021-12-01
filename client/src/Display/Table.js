@@ -27,14 +27,12 @@ async function restaurants(restaurantName) {
       .then(data => data.json())
    }
 
- // For testing purposes
-//  const logRestaurant = async e => {
-//     e.preventDefault();
-//     console.log("logging restaurant")
-//     const restaurant = await restaurants("Bruin Plate")
-//       console.log("got it")
-//       console.log(restaurant)
-//   }
+//  For testing purposes
+ const logRestaurant = async e => {
+    e.preventDefault();
+    const restaurant = await restaurants("BCafe")
+    console.log(restaurant)
+  }
 
 class RestaurantEntry {
     constructor(name, wait = 10, crowd = 0, open = "11 AM", close = "1 PM") {
@@ -289,7 +287,7 @@ class Table extends Component {
             <div>
                 {/* <p>{countUp}</p> */}
                 <p className = "tableP">Updates every minute</p>
-                {/* <input type="button" value="Log restaurant" onClick={logRestaurant}/> */}
+                <input type="button" value="Log restaurant" onClick={logRestaurant}/>
                 <div>
                     <input type="checkBox" onClick={this.toggleShowOpen} defaultChecked/>
                     <p className = "tableP">Only show currently open</p>
