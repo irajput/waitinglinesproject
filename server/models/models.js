@@ -16,6 +16,9 @@ const UserSchema = mongoose.Schema({
 		required:true,
 	},
     name: String,
+	followingRestaurants:[{
+		type:[String]
+	}],
 });
 
 UserSchema.pre(
