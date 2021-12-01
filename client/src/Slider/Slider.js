@@ -1,5 +1,16 @@
 import React from 'react';
 import "./Slider.css";
+import {
+    LineChart,
+    ResponsiveContainer,
+    Legend, Tooltip,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid
+} from 'recharts';
+
+
 
 function Slider() {
     return (

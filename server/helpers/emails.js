@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
-exports.sendEmail = async (req,res,next) => {
-    let {email}=req.body;
+exports.sendEmail = async (email) => {
+    // let {email}=req.body;
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.HOST,
@@ -20,8 +20,8 @@ exports.sendEmail = async (req,res,next) => {
       subject: "No need to wait!",
       text: "The restaurant you are waiting for is open now!",
     });
-    res.send({message:"email sent sucessfully"});
+    return {message:"email sent sucessfully"};
   } catch (error) {
-    res.send({message:error});
+    return {message:error};
   }
 };
