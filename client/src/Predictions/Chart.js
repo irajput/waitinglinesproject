@@ -36,7 +36,7 @@ function Chart() {
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={predictor} margin={{ right: 300 }}>
                     <CartesianGrid />
-                    <XAxis dataKey="name" 
+                    <XAxis dataKey="" 
                         interval={'preserveStartEnd'} />
                     <YAxis></YAxis>
                     <Legend />
