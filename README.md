@@ -1,5 +1,5 @@
 # waitinglinesproject
 
-in both the waitinglinesproject directory and client directory
-  Run `npm install`
-  Run `npm start`
+In waitinglinesproject directory run `npm install` and `npm start`
+
+cd into client directory and run `npm install` and `npm start`
