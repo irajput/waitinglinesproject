@@ -94,6 +94,9 @@ else {
           <li>
             <Link to="/display"> Wait Line Display </Link>
           </li>
+          <li>
+            <Link to="/predictions"> Predictions </Link>
+          </li>
         </ul>
       </nav>
     
@@ -109,6 +112,8 @@ else {
       <Route path="/profile" element={<Profile/>} />
 
       <Route path="/display" element={<Display/>} />
+
+      <Route path="/predictions" element={<Predictions/>} />
 
     </Routes>
 
