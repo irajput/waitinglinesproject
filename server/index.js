@@ -52,6 +52,12 @@ async function setup(){
 		};
 		currentDayLists[val] = [];
 		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+		if(histVals == null){
+			histVals = await models.Prediction.create(
+				{dayOfWeek : dayOfWeek,
+				 resturantCode:val,
+				 modelsUsed:0,values : []});
+		}
 		currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
 		for(let j = 0; j < chunkCount && j < currentPredictions[val].length; j++){
 			currentDayLists[val].push({
