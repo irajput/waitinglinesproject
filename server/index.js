@@ -200,7 +200,7 @@ app.get(
 app.get(
 	"/waitTime",
 	(req,res) => {
-		const resturaunt = req.body.resturaunt; 
+		const resturaunt = req.query.resturaunt; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({
