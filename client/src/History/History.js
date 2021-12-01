@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../Login/Login.css';
 
 async function hist(rest) {
-    let today = new Date().toLocaleDateString()
+    let today = new Date().toISOString().slice(0, 10)
     console.log(today)
     let mhist =  await fetch('http://localhost:3001/history?' + new URLSearchParams({'name': rest}).toString() + new URLSearchParams({'date': today}).toString(), {
             method: 'GET',
@@ -15,7 +15,7 @@ async function hist(rest) {
         if (mhist.message === "Failure") {
             alert("Invalid Restaurant")
         }
-        console.log(mhist.message)
+        console.log(mhist)
 }
 
 export default function History() {
