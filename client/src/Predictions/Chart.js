@@ -13,6 +13,7 @@ function Chart() {
     //const [posts, setPosts] = useState([]);
     let restaur = String(sessionStorage.getItem('restaurant'));
     let predictor = [1,2,3,4,5]
+    console.log("Hi" + JSON.parse(sessionStorage.getItem('preds')))
     if (sessionStorage.getItem('preds') !== null) {
         console.log(JSON.parse(sessionStorage.getItem('preds')))
         predictor = JSON.parse(sessionStorage.getItem('preds'))
@@ -28,6 +29,9 @@ function Chart() {
     let predicts = sessionStorage.getItem('preds')*/
     //let predicts = sessionStorage.getItem('preds');
     //console.log("Hi" + predicts)
+    console.log(JSON.parse(sessionStorage.getItem('preds')))
+    let getX = (x) => {console.log(x[0]); return x[0]};;
+    let getY = (x) => { return x[1]};
     return (
         <>
             <h1 className="text-heading">
@@ -36,12 +40,12 @@ function Chart() {
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={predictor} margin={{ right: 300 }}>
                     <CartesianGrid />
-                    <XAxis dataKey="" 
+                    <XAxis dataKey={getX} 
                         interval={'preserveStartEnd'} />
                     <YAxis></YAxis>
                     <Legend />
                     <Tooltip />
-                    <Line dataKey="Predicted Wait Time"
+                    <Line dataKey={getY}
                         stroke="black" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>

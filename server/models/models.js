@@ -143,7 +143,7 @@ PredictionSchema.methods.generatePrediction = function(points){
 			predictionList.push([
 				nextTime,
 				this.values[i].avgWaitTime]);
-			nextTime + iterStep;
+			nextTime += iterStep;
 		}
 		return predictionList;
 		

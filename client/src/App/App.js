@@ -10,9 +10,12 @@ import Display from "../Display/Display";
 import Stopwatch from "../Stopwatch/Stopwatch"
 import Predictions from "../Predictions/Predictions"
 import { Routes, Route, Link} from "react-router-dom";
+import { session } from "passport";
 
 function App() {
-  //if (sessionStorage.getItem('token') != null) {
+  sessionStorage.setItem('login', 'false');
+  let mtoken = sessionStorage.getItem('token');
+  if (mtoken !== null) {
   return (
     <div className ="App"> 
     <nav>
@@ -71,13 +74,16 @@ function App() {
     </div>
   );
 }
-/*else {
+else {
   return (
     <div className ="App"> 
     <nav>
         <ul id="navbar">
           <li>
             <Link to="/"> Home </Link>
+          </li>
+          <li>
+            <Link to="/signup"> Sign Up </Link>
           </li>
           <li>
             <Link to="/login"> Login </Link>
@@ -98,6 +104,8 @@ function App() {
 
       <Route path="/login" element={<Login/>} />
 
+      <Route path="/signup" element={<Signup/>} />
+
       <Route path="/profile" element={<Profile/>} />
 
       <Route path="/display" element={<Display/>} />
@@ -109,6 +117,7 @@ function App() {
     
     </div>
   );
-}*/
+}
+}
 
 export default App;
