@@ -21,6 +21,7 @@ app.use(cors());
 // JS is frequently stringly typed, so we allow for these codes to be used to tell us the legal resturants
 const RESTURAUNTCODES = ["Rendezvous","Study","Feast","BCafe","DeNeve","Epic", "BPlate"];
 
+
 /////////////////////////////
 // Variable Initialization //
 /////////////////////////////
@@ -38,28 +39,28 @@ let currentDayLists = {}
 // These are just lists of coordinate tuples for ease of use with observable.js
 let currentPredictions = {} 
 async function setup(){
-    for(let i in RESTURAUNTCODES){
-        let val = RESTURAUNTCODES[i];
-        let now = new Date();
-        let millis = now  - new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0,0);
-        let chunkCount = Math.floor(millis/(5*60*1000));
-        let dayOfWeek = now.getDay();
-        currentChunks[val] = {
-            total : 0,
-            elements : [],
-            time : 0,
-        };
-        currentDayLists[val] = [];
-        let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
-        currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
-        for(let j = 0; j < chunkCount && j < currentPredictions[val].length; j++){
-            currentDayLists[val].push({
-                total : currentPredictions[val][j][1],
-                elements : ["prediction data"],
-                time : currentPredictions[val][j][0],
-            });
-        }
-    }
+	for(let i in RESTURAUNTCODES){
+		let val = RESTURAUNTCODES[i];
+		let now = new Date();
+		let millis = now  - new Date(now.getFullYear(),now.getMonth(),now.getDate(),0,0,0,0);
+		let chunkCount = Math.floor(millis/(5*60*1000));
+		let dayOfWeek = now.getDay();
+		currentChunks[val] = {
+			total : 0,
+			elements : [],
+			time : 0,
+		};
+		currentDayLists[val] = [];
+		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
+		currentPredictions[val] = histVals.generatePrediction(currentDayLists[val]);
+		for(let j = 0; j < chunkCount && j < currentPredictions[val].length; j++){
+			currentDayLists[val].push({
+				total : currentPredictions[val][j][1],
+				elements : ["prediction data"],
+				time : currentPredictions[val][j][0],
+			});
+		}
+	}
 }
 setup();
 const connectToDB = async () => {
@@ -174,7 +175,7 @@ app.post(
 		try {
 		    if(err || !user){
 				console.log(err);
-				return new Error("An authentication error occured");
+				return res.json("An authentication error occurred");
 		    }
 		    req.login(
 				user,

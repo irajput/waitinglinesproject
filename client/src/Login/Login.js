@@ -4,10 +4,7 @@ import React, { useState } from 'react';
 
 import './Login.css';
 
-/*function setToken(userToken) {
-  console.log(userToken)
-  sessionStorage.setItem('token', userToken);
-}*/
+
 
 async function loginUser(email, password) {
   //try {
@@ -23,18 +20,23 @@ async function loginUser(email, password) {
 		.then(data => data.json())
     console.log(thing)
     if (thing === "An authentication error occurred") {
-      console.log("signing up")
-      let thing = await fetch('http://localhost:3001/signup', {
+      /*console.log("signing up")
+
+      await fetch('http://localhost:3001/signup', {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({"email":email,"password":password}),
     })
-    .then(data => data.json())
+
 	  //console.log(thing);
-	  return loginUser(email,password);
+	  return loginUser(email,password);*/
+    alert("Invalid credentials");
     }
+    console.log(thing.token);
+    sessionStorage.setItem('login','true');
 	  return thing.token
   //}
   /*catch (error) {
@@ -45,10 +47,12 @@ async function loginUser(email, password) {
       },
 		body: JSON.stringify({"email":email,"password":password}),
     })
+
     .then(data => data.json())
 	  //console.log(thing);
 	  return loginUser(email,password);
   }*/
+
 }
 
 export default function Login() {
@@ -62,6 +66,7 @@ export default function Login() {
       password);
     console.log("Got token");
     sessionStorage.setItem('token', token);
+    document.location.reload();
   }
 
   return(
@@ -83,3 +88,4 @@ export default function Login() {
     </div>
   )
 }
+

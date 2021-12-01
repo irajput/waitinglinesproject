@@ -16,6 +16,9 @@ const UserSchema = mongoose.Schema({
 		required:true,
 	},
     name: String,
+	followingRestaurants:[{
+		type:[String]
+	}],
 });
 
 UserSchema.pre(
@@ -74,7 +77,7 @@ PredictionSchema.methods.compareUnweighted = function(points){
 			totalDifference += Math.abs(this.values[i].avgWaitTime - points[i].total/points[i].elements.length);
 		i++;
 	}
-	if(i === 0) return 0; // If one of these is empty, they are infinitely far apart and we should do absolutely no predictions
+	if(i === 0) return 0 // If one of these is empty, they are infinitely far apart and we should do absolutely no predictions
 	return totalDifference/i; // Returns the average distance between each of the points
 }
 
