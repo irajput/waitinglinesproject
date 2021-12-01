@@ -4,12 +4,14 @@ const router = express.Router();
 const {
     getRestaurantProfile,
     createRestaurant,
-    setSlider
+    setSlider,
+    sendAllEmails
 } = require("../helpers/restaurant");
 
 
 router.get("/profile", getRestaurantProfile); //the true path is restaurant/profile
 router.post("/create",createRestaurant);
 router.post("/updateSlider",setSlider);
+router.post("/sendAllEmails",sendAllEmails);
 
 module.exports = router;

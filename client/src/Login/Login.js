@@ -24,13 +24,16 @@ async function loginUser(email, password) {
     console.log(thing)
     if (thing === "An authentication error occurred") {
       console.log("signing up")
+
       await fetch('http://localhost:3001/signup', {
+
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({"email":email,"password":password}),
     })
+
 	  //console.log(thing);
 	  return loginUser(email,password);
     }
@@ -83,3 +86,4 @@ export default function Login() {
     </div>
   )
 }
+
