@@ -4,10 +4,6 @@ import React, { useState } from 'react';
 
 import './Login.css';
 
-function setToken(userToken) {
-  console.log(JSON.stringify(userToken))
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
 
 async function loginUser(email, password) {
   try {
@@ -31,7 +27,7 @@ async function loginUser(email, password) {
       },
       body: {"email":email,"password":password}
     })
-    .then(data => data.json())
+    
     return loginUser(email, password);
   }
 }
