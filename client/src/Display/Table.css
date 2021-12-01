@@ -1,0 +1,14 @@
+.tableInputs {
+    background-color: transparent;
+    outline: none;
+    width: 80px;
+}
+
+td {
+    width: 80px;
+}
+
+.tableP {
+    display: inline;
+}
+

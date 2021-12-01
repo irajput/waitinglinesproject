@@ -1,41 +1,104 @@
 // client/src/App.js
-
-import React, { useState } from "react";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Dashboard from '../Dashboard.js';
-import Preferences from '../Preferences.js';
-import Login from '../Login/Login';
+import React from "react";
 import "./App.css";
-import useToken from './useToken';
-
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
-
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
+import Home from "../Home/Home";
+import Slider from "../Slider/Slider";
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import Display from "../Display/Display";
+import Stopwatch from "../Stopwatch/Stopwatch"
+import Predictions from "../Predictions/Predictions"
+import { Routes, Route, Link} from "react-router-dom";
+import useToken from "./useToken"
 
 function App() {
-  const { token, setToken } = useToken();
-
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-  
+  //if (sessionStorage.getItem('token') != null) {
   return (
-    <div className="wrapper">
-      <h1>Application</h1>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/preferences" element={<Preferences/>} />
-        </Routes>
-      </BrowserRouter>
+    <div className ="App"> 
+    <nav>
+        <ul id="navbar">
+          <li>
+            <Link to="/"> Home </Link>
+          </li>
+          <li>
+            <Link to="/login"> Login </Link>
+          </li>
+          <li>
+            <Link to="/profile"> Profile </Link>
+          </li>
+          <li>
+            <Link to="/display"> Wait Line Display </Link>
+          </li>
+          <li>
+            <Link to="/stopwatch"> Clock In/Out </Link>
+          </li>
+          <li>
+            <Link to="/predictions"> Predictions </Link>
+          </li>
+        </ul>
+      </nav>
+    
+    <div className = "main" >
+
+    <Routes>
+      <Route exact path="/" element={<Home/>} />
+
+      <Route path="/login" element={<Login/>} />
+
+      <Route path="/profile" element={<Profile/>} />
+
+      <Route path="/display" element={<Display/>} />
+
+      <Route path="/stopwatch" element={<Stopwatch/>} />
+
+      <Route path="/predictions" element={<Predictions/>} />
+
+    </Routes>
+
+    </div>
+   
+    
     </div>
   );
 }
+/*else {
+  return (
+    <div className ="App"> 
+    <nav>
+        <ul id="navbar">
+          <li>
+            <Link to="/"> Home </Link>
+          </li>
+          <li>
+            <Link to="/login"> Login </Link>
+          </li>
+          <li>
+            <Link to="/profile"> Profile </Link>
+          </li>
+          <li>
+            <Link to="/display"> Wait Line Display </Link>
+          </li>
+        </ul>
+      </nav>
+    
+    <div className = "main" >
+
+    <Routes>
+      <Route exact path="/" element={<Home/>} />
+
+      <Route path="/login" element={<Login/>} />
+
+      <Route path="/profile" element={<Profile/>} />
+
+      <Route path="/display" element={<Display/>} />
+
+    </Routes>
+
+    </div>
+   
+    
+    </div>
+  );
+}*/
 
 export default App;

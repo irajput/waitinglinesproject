@@ -1,32 +1,70 @@
 // client/src/Login.js
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import './Login.css';
 
-async function loginUser(credentials) {
-  return fetch('http://localhost:3000/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => data.json())
- }
+/*function setToken(userToken) {
+  console.log(userToken)
+  sessionStorage.setItem('token', userToken);
+}*/
 
-export default function Login({ setToken }) {
-  const [username, setUserName] = useState();
+async function loginUser(email, password) {
+  //try {
+    let body = {"email":email,"password":password,}
+    console.log(body)
+    let thing = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+		body: JSON.stringify({"email":email,"password":password,}),
+    })
+		.then(data => data.json())
+    console.log(thing)
+    if (thing === "An authentication error occurred") {
+      console.log("signing up")
+
+      await fetch('http://localhost:3001/signup', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"email":email,"password":password}),
+    })
+
+	  //console.log(thing);
+	  return loginUser(email,password);
+    }
+    console.log(thing.token);
+	  return thing.token
+  //}
+  /*catch (error) {
+    let thing = await fetch('http://localhost:3001/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+		body: JSON.stringify({"email":email,"password":password}),
+    })
+    .then(data => data.json())
+	  //console.log(thing);
+	  return loginUser(email,password);
+  }*/
+}
+
+export default function Login() {
+  const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken(token);
+    const token = await loginUser(
+      email,
+      password);
+    console.log("Got token");
+    sessionStorage.setItem('token', token);
   }
 
   return(
@@ -35,13 +73,13 @@ export default function Login({ setToken }) {
         <form onSubmit={handleSubmit}>
         <label>
             <p>Username</p>
-            <input type="text" onChange={e => setUserName(e.target.value)}/>
+            <input type="text" onChange={e => setEmail(e.target.value)}/>
         </label>
         <label>
             <p>Password</p>
             <input type="password" onChange={e => setPassword(e.target.value)}/>
         </label>
-        <div>
+        <div className="center">
             <button type="submit">Submit</button>
         </div>
         </form>
@@ -49,6 +87,3 @@ export default function Login({ setToken }) {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
