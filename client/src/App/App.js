@@ -12,6 +12,7 @@ import Predictions from "../Predictions/Predictions"
 import History from "../History/History"
 import { Routes, Route, Link} from "react-router-dom";
 import { session } from "passport";
+import Emailer from "../Emailer/Emailer"
 
 function App() {
   sessionStorage.setItem('login', 'false');
@@ -19,6 +20,7 @@ function App() {
   if (mtoken !== null) {
   return (
     <div className ="App"> 
+    <Emailer />
     <nav>
         <ul id="navbar">
           <li>
