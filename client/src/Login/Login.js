@@ -24,7 +24,7 @@ async function loginUser(email, password) {
     console.log(thing)
     if (thing === "An authentication error occurred") {
       console.log("signing up")
-      let thing = await fetch('http://localhost:3001/signup', {
+      await fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
