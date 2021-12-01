@@ -29,7 +29,9 @@ class HallForm extends React.Component {
   handleSubmit(event) {
     alert('You submitted data for: ' + this.state.value + " val: " + this.state.choice);
     event.preventDefault();
-    console.log(getToken());
+
+    let token = sessionStorage.getItem('token');
+    console.log(token)
     
     let body = {
       "name" : this.state.value,
@@ -40,7 +42,7 @@ class HallForm extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'secret_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTEyNWM0YTVmZDJkNjM0NGQwNGE5OCJ9LCJpYXQiOjE2Mzc5ODg2NTR9.c2S3ITwUkUZ0P8_OL6a0Nc1GMUx6XQ2l2M-Fe9QFbW4'
+        'secret_token': token,
       },
       body: JSON.stringify(body)
 
