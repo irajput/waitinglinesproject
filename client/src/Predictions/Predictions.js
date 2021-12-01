@@ -26,17 +26,18 @@ class Predictions extends React.Component {
         let mrest = sessionStorage.getItem('restaurant')
         console.log(mrest)
 
-        let predurl = 'http://localhost:3001/prediction?resturant=' + {mrest}
-        
-        let mpreds =  await fetch(predurl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-    })
-    console.log(mpreds)
-    sessionStorage.setItem('preds', JSON.stringify(mpreds));
-}
+        //let mpreds = []
+        let mpreds =  await fetch('http://localhost:3001/prediction?' + new URLSearchParams({'restaurant': mrest}).toString(), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(data => data.json())
+        console.log(mpreds.points)
+        sessionStorage.setItem('preds', JSON.stringify(mpreds.points));
+        console.log(JSON.parse(sessionStorage.getItem('preds')))
+    }
 
       render() {
         return (

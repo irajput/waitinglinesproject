@@ -12,20 +12,16 @@ import {
 function Chart() {
     //const [posts, setPosts] = useState([]);
     let restaur = String(sessionStorage.getItem('restaurant'));
-    console.log(restaur)
-    let predicts = sessionStorage.getItem('preds');
-    predicts = [1,2,3,4,5]
-    console.log("Hi" + predicts)
-    const predurl1 = "http://localhost:3001/prediction?restaurant="
-    const predurl =  predurl1.concat(restaur)
-    console.log(predurl)
-        
-    /*let mpreds =  await fetch(predurl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-    })*/
+    let predictor = [1,2,3,4,5]
+    if (sessionStorage.getItem('preds') !== null) {
+        console.log(JSON.parse(sessionStorage.getItem('preds')))
+        predictor = JSON.parse(sessionStorage.getItem('preds'))
+    }
+    //let predictis = JSON.parse(sessionStorage.getItem('preds'));
+    //console.log("Hi" + predictis)
+    //const predurl1 = "http://localhost:3001/prediction?restaurant="
+    //const predurl =  predurl1.concat(restaur)
+    //console.log(predurl)
     //setPosts(mpreds.data);
     /*console.log(mpreds)
     sessionStorage.setItem('preds', JSON.stringify(mpreds.response));
@@ -38,7 +34,7 @@ function Chart() {
                 Predictions for {restaur}
             </h1>
             <ResponsiveContainer width="100%" aspect={3}>
-                <LineChart data={predicts} margin={{ right: 300 }}>
+                <LineChart data={predictor} margin={{ right: 300 }}>
                     <CartesianGrid />
                     <XAxis dataKey="name" 
                         interval={'preserveStartEnd'} />
