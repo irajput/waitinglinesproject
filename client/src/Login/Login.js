@@ -5,31 +5,52 @@ import React, { useState } from 'react';
 import './Login.css';
 
 
+
 async function loginUser(email, password) {
-  try {
+  //try {
     let body = {"email":email,"password":password,}
     console.log(body)
-    return fetch('http://localhost:3001/login', {
-      mode: 'no-cors',
+    let thing = await fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {"email":email,"password":password,},
+		body: JSON.stringify({"email":email,"password":password,}),
     })
+		.then(data => data.json())
+    console.log(thing)
+    if (thing === "An authentication error occurred") {
+      console.log("signing up")
+
+      await fetch('http://localhost:3001/signup', {
+
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"email":email,"password":password}),
+    })
+
+	  //console.log(thing);
+	  return loginUser(email,password);
+    }
+    console.log(thing.token);
+	  return thing.token
+  //}
+  /*catch (error) {
+    let thing = await fetch('http://localhost:3001/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+		body: JSON.stringify({"email":email,"password":password}),
+    })
+
     .then(data => data.json())
-  }
-  catch (error) {
-    fetch('http://localhost:3001/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: {"email":email,"password":password}
-    })
-    
-    return loginUser(email, password);
-  }
+	  //console.log(thing);
+	  return loginUser(email,password);
+  }*/
+
 }
 
 export default function Login() {
@@ -42,7 +63,7 @@ export default function Login() {
       email,
       password);
     console.log("Got token");
-    setToken(token);
+    sessionStorage.setItem('token', token);
   }
 
   return(
@@ -64,3 +85,4 @@ export default function Login() {
     </div>
   )
 }
+

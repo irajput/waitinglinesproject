@@ -160,7 +160,7 @@ app.post(
 		try {
 		    if(err || !user){
 				console.log(err);
-				return new Error("An authentication error occured");
+				return res.json("An authentication error occurred");
 		    }
 		    req.login(
 				user,
@@ -200,7 +200,7 @@ app.get(
 app.get(
 	"/waitTime",
 	(req,res) => {
-		const resturaunt = req.body.resturaunt; 
+		const resturaunt = req.query.restaurant; 
 		// sanity check time, we want to ensure these are valid inputs
 		if(RESTURAUNTCODES.findIndex((val) => val === resturaunt) === -1){
 			res.json({

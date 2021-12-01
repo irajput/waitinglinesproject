@@ -135,7 +135,6 @@ class Table extends Component {
             this.setState({showingOnlyOpen: true});
             for (i = 0; i < this.state.restaurants.length; i++)
             {
-                //TODO: compare current time to open_time and close_time to see what is open
                 var open_time = this.convertTime(this.state.restaurants[i].open); 
                 var close_time = this.convertTime(this.state.restaurants[i].close);
                 var today = new Date();
