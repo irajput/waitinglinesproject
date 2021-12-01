@@ -9,6 +9,7 @@ import Profile from "../Profile/Profile";
 import Display from "../Display/Display";
 import Stopwatch from "../Stopwatch/Stopwatch"
 import Predictions from "../Predictions/Predictions"
+import History from "../History/History"
 import { Routes, Route, Link} from "react-router-dom";
 import { session } from "passport";
 
@@ -44,6 +45,9 @@ function App() {
           <li>
             <Link to="/slider"> Crowdedness </Link>
           </li>
+          <li>
+            <Link to="/history"> History </Link>
+          </li>
         </ul>
       </nav>
     
@@ -65,6 +69,8 @@ function App() {
       <Route path="/slider" element={<Slider/>} />
 
       <Route path="/predictions" element={<Predictions/>} />
+
+      <Route path="/history" element={<History/>} />
 
     </Routes>
 
@@ -97,6 +103,9 @@ else {
           <li>
             <Link to="/predictions"> Predictions </Link>
           </li>
+          <li>
+            <Link to="/history"> History </Link>
+          </li>
         </ul>
       </nav>
     
@@ -114,6 +123,8 @@ else {
       <Route path="/display" element={<Display/>} />
 
       <Route path="/predictions" element={<Predictions/>} />
+
+      <Route path="/history" element={<History/>} />
 
     </Routes>
 

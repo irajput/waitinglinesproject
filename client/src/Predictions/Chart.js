@@ -30,7 +30,14 @@ function Chart() {
     //let predicts = sessionStorage.getItem('preds');
     //console.log("Hi" + predicts)
     console.log(JSON.parse(sessionStorage.getItem('preds')))
-    let getX = (x) => {console.log(x[0]); return x[0]};;
+    let getX = (x) => {
+        console.log(x[0]); 
+        let w = x[0]/60000;
+        let m = w%60;
+        let h = Math.floor(w/60);
+        let s = h + ":" + m;
+        return s;
+    };;
     let getY = (x) => { return x[1]};
     return (
         <>
