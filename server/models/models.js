@@ -184,5 +184,23 @@ function linearExtrapolate(x1,y1,x2,y2,x3){
 }
 const PredictionModel = mongoose.model('prediction',PredictionSchema);
 
+const HistSchema = mongoose.Schema({
+	restaurant: {
+		type:String,
+		required:true,
+	},
+	date: {
+		type:Date,
+		required:true,
+	},
+	values: {
+		type: [[Number]],
+		required:true,
+	}
+});
+
+const HistModel = mongoose.model('history',HistSchema);
+
 module.exports.User = UserModel;
 module.exports.Prediction = PredictionModel;
+module.exports.Hist = HistModel;

@@ -199,6 +199,38 @@ app.post(
     }
 );
 app.get(
+	"/history",
+	async (req,res) => {
+		let name = req.query.name;
+		let date = req.query.date;
+		await models.Hist.findOne({restaurant:name,date,date}).then(
+			(model) => {
+				if(!model){
+					res.json({
+						message: "Failure",
+						reason: "Couldn't find model matching values given",
+						values: []
+					});
+					return;
+				}
+				res.json({
+					message: "Success",
+					reason: "No issues",
+					values: model.values
+				});
+			}
+		).catch(
+			(err) => {
+				res.json({
+					message: "Failure",
+					reason: "An error occurred while processing your data",
+					values: []
+				});
+			}
+		);
+	}
+);	
+app.get(
 	"/prediction",
 	(req,res) => {
 		const resturaunt = req.query.restaurant; 
@@ -340,10 +372,11 @@ async function storeCurrChunks(){
 }
 cron.schedule('*/5 * * * *', storeCurrChunks);
 async function pushDayBack(){
+	let now = new Date()
+	let dayOfWeek = now.getDay();
+	let dateString = now.toISOString().split('T')[0];
 	for(let i in RESTURAUNTCODES){
 		let val = RESTURAUNTCODES[i]
-		let now = new Date()
-		let dayOfWeek = now.getDay();
 		let histVals = await models.Prediction.findOne({ dayOfWeek : dayOfWeek,resturantCode:val });
 		if(histVals == null){
 			histVals = await models.Prediction.create(
@@ -353,7 +386,11 @@ async function pushDayBack(){
 		}
 		histVals.integrateValues(currentDayLists[val]);
 		await histVals.save();
-		console.log(histVals);
+		await models.Hist.create({
+			restaurant: val,
+			date: dateString,
+			values: currentDayLists[val],
+		});
 		currentDayLists[val] = [];
 		currentPredictions[val] = [];
 	}
