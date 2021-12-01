@@ -68,20 +68,25 @@ export default function Login() {
 
   return(
     <div className="login-wrapper">
+      <div class="completeWrap">
       <h1>Please Log In</h1>
+      <div class="signup">
+
         <form onSubmit={handleSubmit}>
-        <label>
+        <label class="loginLabel">
             <p>Username</p>
-            <input type="text" onChange={e => setEmail(e.target.value)}/>
+            <input class="loginInput" type="text" onChange={e => setEmail(e.target.value)}/>
         </label>
-        <label>
+        <label class="loginLabel"> 
             <p>Password</p>
-            <input type="password" onChange={e => setPassword(e.target.value)}/>
+            <input class="loginInput" type="password" onChange={e => setPassword(e.target.value)}/>
         </label>
         <div className="center">
             <button type="submit">Submit</button>
         </div>
         </form>
+        </div>
+        </div>
     </div>
   )
 }

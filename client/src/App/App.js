@@ -13,33 +13,24 @@ import useToken from "./useToken"
 
 function App() {
   //if (sessionStorage.getItem('token') != null) {
+   // <nav class="nav nav-pills nav-fill navMINE">
   return (
     <div className ="App"> 
-    <nav>
-        <ul id="navbar">
-          <li>
-            <Link to="/"> Home </Link>
-          </li>
-          <li>
-            <Link to="/login"> Login </Link>
-          </li>
-          <li>
-            <Link to="/profile"> Profile </Link>
-          </li>
-          <li>
-            <Link to="/display"> Wait Line Display </Link>
-          </li>
-          <li>
-            <Link to="/stopwatch"> Clock In/Out </Link>
-          </li>
-          <li>
-            <Link to="/predictions"> Predictions </Link>
-          </li>
-          <li>
-            <Link to="/slider"> Crowdedness </Link>
-          </li>
-        </ul>
-      </nav>
+    
+
+    <div class="nav">
+      <ul>
+        <li class="home"><a class="nav-item nav-link active" href="/">Home</a></li>
+        <li class="tutorials"><a class="nav-item nav-link " href="/login">Login</a></li>
+        <li class="about"><a class="nav-item nav-link " href="/profile">Profile</a></li>
+        <li class="news"><a class="nav-item nav-link " href="/display">Wait Line Display</a></li>
+        <li class="contact"><a class="nav-item nav-link " href="/stopwatch">Clock In/Out </a></li>
+        <li class="contact"><a class="nav-item nav-link " href="/predictions">Predictions </a></li>
+        <li class="contact"> <a class="nav-item nav-link " href="/slider">Crowdedness </a></li>
+
+      </ul>
+       
+      </div>
     
     <div className = "main" >
 
@@ -64,6 +55,7 @@ function App() {
    
     
     </div>
+
   );
 }
 /*else {
