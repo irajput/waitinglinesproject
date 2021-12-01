@@ -22,6 +22,8 @@ function App() {
       <ul>
         <li class="home"><a class="nav-item nav-link active" href="/">Home</a></li>
         <li class="tutorials"><a class="nav-item nav-link " href="/login">Login</a></li>
+        <li class="news"><a class="nav-item nav-link " href="/signup">Sign Up</a></li>
+
         <li class="about"><a class="nav-item nav-link " href="/profile">Profile</a></li>
         <li class="news"><a class="nav-item nav-link " href="/display">Wait Line Display</a></li>
         <li class="contact"><a class="nav-item nav-link " href="/stopwatch">Clock In/Out </a></li>

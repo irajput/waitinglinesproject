@@ -63,21 +63,19 @@ async function profile() {
 
   render() {
     return (
-      <div className="profile">
+      <div className="profile container">
         <input type="button" value="Log profile" onClick={logProfile}/>
-        <input type="button" value="Get Profile" onClick={this.updateProfilePage}/>
+        <input  type="button" value="Get Profile" onClick={this.updateProfilePage}/>
         <h1>Profile Page</h1>
-        <input type="button" value="Submit Changes" onClick={this.postProfile}/>
         <h3>Receive notifications</h3>
         <p>Notifications will be sent to the email tied to your account. </p>
-        <Switch />
+        
         <div id="container">
-          <button id = "dummy-button" className="dummy-button"/>
-          <div id = "notification-opts" disabled>
             <h3>Maximum wait time (minutes):</h3>
             <p>Once the wait time at a restaurant drops below this threshold, you will be notified. </p>
             <input type="number" id="wait-min" name="wait-min" min="1" max="60" defaultValue="30"/>
             <h3>Receive notifications for these restaurants:</h3>
+            <div class="checks">
             <div id="outer">
                 <input type="checkBox"  className = "inner" id = "0" defaultChecked/>
                 <p className = "inner"> Bruin Cafe </p>
@@ -106,8 +104,12 @@ async function profile() {
             <input type="checkBox"  className = "inner" id = "6" defaultChecked/>
                 <p className = "inner"> The Study </p>
             </div>
+            </div>
+            <input type="button" class="profileButton" value="Submit Changes" onClick={this.postProfile}/>
+
           </div>
-        </div>
+
+
       </div>
     );
   }
