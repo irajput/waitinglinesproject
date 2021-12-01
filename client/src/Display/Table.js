@@ -11,31 +11,19 @@ async function restaurants(restaurantName) {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
-        'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
+        'secret_token': sessionStorage.getItem('token'),
     },
   })
     .then(data => data.json())
  }
 
-//  async function waitTime(restaurantName) {
-//     return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'name': restaurantName}).toString(), {
-//       method: 'GET',
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-//       },
-//     })
-//       .then(data => data.json())
-//    }
-
-async function waitTime(restaurantName) {
-    return fetch('http://localhost:3001/waitTime', {
+ //TODO: getting 500 internal server error on this
+ async function waitTime(restaurantName) {
+    return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'restaurant': restaurantName}).toString(), {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
-          'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-          'name': restaurantName
-        },
+      },
     })
       .then(data => data.json())
    }
@@ -59,10 +47,10 @@ class RestaurantEntry {
  }
 }
 
-// The names of the restaurants as needed for fetching from restaurant/profile
-const RESTAURANTNAMES = ["Bruin Plate"];
 // The codes for fetching from waitTime
-const RESTURAUNTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve","Epic"];
+const RESTAURANTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve","Epic"];
+// The names of the restaurants as needed for fetching from restaurant/profile
+const RESTAURANTNAMES = RESTAURANTCODES;
 
 class Table extends Component {
     constructor(props) {
@@ -132,8 +120,8 @@ class Table extends Component {
             try {
                 const updatedRestaurant = await restaurants(RESTAURANTNAMES[i]);
                 //TODO: restaurant wait time uses body
-                // const newWait = await waitTime(RESTURAUNTCODES[i]); 
-                // console.log(newWait);
+                // const newWait = await waitTime(RESTAURANTNAMES[i]);
+                // console.log(newWait) 
                 const newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;

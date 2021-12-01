@@ -5,48 +5,22 @@ var isMounted = false;
 // The codes for fetching from waitTime
 const RESTURAUNTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve","Epic"];
 
- async function profile() {
-    return fetch('http://localhost:3001/user/profile', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // 'secret_token': getToken()
-        'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
-      }
-    })
-    // .then(data => {console.log(data)});
-      .then(data => data.json())
-   }
 
-   async function email(email) {
-    return fetch('http://localhost:3001/user/emails', {
+   async function sendAllEmails(restaurant) {
+    return fetch('http://localhost:3001/restaurant/sendAllEmails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'email': email
+        'name': restaurant
       }
     })
-      .then(data => data.json())
-   }
-
-   async function restaurants(restaurantName) {
-    return fetch('http://localhost:3001/restaurant/profile?' + new URLSearchParams({'name': restaurantName}).toString(), {
-      method: 'GET',
-      headers: {
-          'Content-Type': 'application/json',
-          // 'secret_token': getToken()
-          'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-      },
-    })
-      .then(data => data.json())
    }
 
    async function waitTime(restaurantName) {
-    return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'name': restaurantName}).toString(), {
+    return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'restaurant': restaurantName}).toString(), {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
-          'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
       },
     })
       .then(data => data.json())
@@ -69,26 +43,23 @@ class Emailer extends Component {
 
     async getPreferences() {
         //TODO: Find how to get preferences
-        return [30, [true,true,true,false,false,true,true]]
+        return [true,true,true,false,false,true,true]
     }
 
-    async sendEmail() {
+    async sendEmail(restaurant) {
         console.log("sending email")
-        const data = await profile();
-        const email = data.user.email;
-        email(email);
+        sendAllEmails(restaurant)
       }
 
-    async shouldSendEmail() {
-        var preferences = this.getPreferences();
-        var waitTime = preferences[0];
-        var notificationPreferences = preferences[1];
+    //If restaurant wait time is below 30 mins, return true
+    // should take in specific restaurant
+    async shouldSendEmail(restaurant) {
+        var preferThisRestaurant = this.getPreferences(restaurant);
+        var waitTimePreference = 30; //TODO: get this locally?
         //TODO: how to get restaurant wait times
-        var restaurantWaitTimes = [10, 20, 30, 40, 50, 60, 70]
-        for (var i = 0; i < 7; i++) {
-            if (notificationPrefernces[i] && restaurantWaitTimes[i] <= waitTime) {
-                return true;
-            }
+        var waitTime = await waitTime(restaurant);
+        if (preferThisRestaurant && waitTime <= waitTimePreference) {
+              return true;
         }
         return false;
       }
@@ -101,11 +72,15 @@ class Emailer extends Component {
             if (isMounted) {
                 if (this.state.countUp >= 60 && !this.state.onCooldown) {
                     this.setState({countUp: 0});
-                    if (this.shouldSendEmail)
-                    {
-                        this.sendEmail();
-                        this.setState({onCooldown: true});
+                    for (var i = 0; i < 7; i++) {
+                      restaurant = RESTURAUNTCODES[i];
+                      if (this.shouldSendEmail(restaurant))
+                      {
+                          this.sendEmail(restaurant);
+                          this.setState({onCooldown: true});
+                      }
                     }
+                    
                 }
                 else if (this.state.countUp >= 10*60) {
                     // Reset countUp to 60 so that an email can be sent immediately if it is needed

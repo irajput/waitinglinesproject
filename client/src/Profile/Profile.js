@@ -10,7 +10,7 @@ async function profile() {
     headers: {
       'Content-Type': 'application/json',
       // 'secret_token': sessionStorage.getItem('token')
-      'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
+      'secret_token': sessionStorage.getItem('token')
     }
   })
     .then(data => data.json())
