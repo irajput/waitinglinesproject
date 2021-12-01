@@ -121,14 +121,6 @@ PredictionSchema.methods.integrateValues = function(points){
 
 PredictionSchema.methods.generatePrediction = function(points){
 	let predictionList = [];
-	// populate the list with the current values of the day
-	for(let i in points){
-		if(points[i].elements.length > 0)
-			predictionList.push([
-				points[i].time,
-				points[i].total/points[i].elements.length,
-			]);
-	}
 	// Afterwards, we want to see how closely this works with our model, we do this via the weighted prediction.
 	let difference = this.compareWeighted(points);
 	let iterStep = 5*60*1000; // For now, iterate across the whole five minutes at once.
@@ -140,6 +132,26 @@ PredictionSchema.methods.generatePrediction = function(points){
 	let numSteps = difference == 0 ? Infinity : Math.floor(maxDifference/difference);
 	let startingLength = predictionList.length;
 	let nextTime = startingLength*maxDifference;
+	// populate the list with the current values of the day
+	if(points.length == 0){
+		nextTime = 0;
+		// if points length is 0, we just show our historical data
+		for(let i = 0; i < this.values.length; i++){
+			predictionList.push([
+				nextTime,
+				this.values[i].avgWaitTime]);
+			nextTime + iterStep;
+		}
+		return predictionList;
+		
+	}
+	for(let i in points){
+		if(points[i].elements.length > 0)
+			predictionList.push([
+				points[i].time,
+				points[i].total/points[i].elements.length,
+			]);
+	}
 	for(let i = startingLength; i < maxIters && i < numSteps + startingLength; i++){
 		if(i > 1){ //if there are at least two values in prediction list
 			let val1 = predictionList[i-2];
