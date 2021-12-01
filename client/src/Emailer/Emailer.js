@@ -95,13 +95,19 @@ class Emailer extends Component {
           if (isMounted) {
             if (this.state.countUp >= 60) {
               this.setState({ countUp: 0 });
+              var restaurantsToSend = []
               for (var i = 0; i < 7; i++) {
                 var restaurant = RESTURAUNTCODES[i];
                 const should = await shouldSendEmail(restaurant);
+                
                 if (should) {
-                  sendAllEmails(restaurant);
-                  console.log("sending email for " + restaurant);
+                  restaurantsToSend.push(restaurant)
                 }
+              }
+              for (i = 0; i < restaurantsToSend.length; i++) {
+                var restaurant = restaurantsToSend[i]
+                sendAllEmails(restaurant);
+                console.log("sending email for " + restaurant);
               }
 
             }
