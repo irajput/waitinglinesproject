@@ -1,6 +1,6 @@
 import './Profile.css';
 import Switch from './Switch';
-// import getToken from '../App/App'
+import getToken from '../App/App'
 import React, { Component } from 'react';
 
 
@@ -9,20 +9,21 @@ async function profile() {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      // 'secret_token': getToken()
+      // 'secret_token': sessionStorage.getItem('token')
       'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ"
     }
   })
     .then(data => data.json())
  }
 
-//  const logProfile = async e => {
-//   e.preventDefault();
-//   console.log("logging profile")
-//   const data = await profile()
-//   console.log("got it")
-//   console.log(data)
-//   }
+ const logProfile = async e => {
+  e.preventDefault();
+  console.log("logging profile")
+  console.log(sessionStorage.getItem('token'))
+  const data = await profile()
+  console.log("got it")
+  console.log(data)
+  }
 
  class Profile extends Component {
   constructor(props) {
@@ -63,7 +64,7 @@ async function profile() {
   render() {
     return (
       <div className="profile">
-        {/* <input type="button" value="Log profile" onClick={logProfile}/> */}
+        <input type="button" value="Log profile" onClick={logProfile}/>
         <input type="button" value="Get Profile" onClick={this.updateProfilePage}/>
         <h1>Profile Page</h1>
         <input type="button" value="Submit Changes" onClick={this.postProfile}/>

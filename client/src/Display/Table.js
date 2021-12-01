@@ -17,13 +17,25 @@ async function restaurants(restaurantName) {
     .then(data => data.json())
  }
 
- async function waitTime(restaurantName) {
-    return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'name': restaurantName}).toString(), {
+//  async function waitTime(restaurantName) {
+//     return fetch('http://localhost:3001/waitTime?' + new URLSearchParams({'name': restaurantName}).toString(), {
+//       method: 'GET',
+//       headers: {
+//           'Content-Type': 'application/json',
+//           'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
+//       },
+//     })
+//       .then(data => data.json())
+//    }
+
+async function waitTime(restaurantName) {
+    return fetch('http://localhost:3001/waitTime', {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
           'secret_token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYxYTAyZDEyOTRiMjY0YTg5YzNlZmRmMiJ9LCJpYXQiOjE2Mzc4OTAyMjN9.eP0hFksBRU8Gdz-Xe9QAzICB5a1D4oSp5kEtPBftXmQ",
-      },
+          'name': restaurantName
+        },
     })
       .then(data => data.json())
    }
@@ -121,6 +133,7 @@ class Table extends Component {
                 const updatedRestaurant = await restaurants(RESTAURANTNAMES[i]);
                 //TODO: restaurant wait time uses body
                 // const newWait = await waitTime(RESTURAUNTCODES[i]); 
+                // console.log(newWait);
                 const newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;
