@@ -270,14 +270,6 @@ app.get(
 		  This should be achieved pretty quickly if we have widespread adoption
 		*/
 		let currChunk = currentChunks[resturaunt];
-		if(currChunk == null){
-			currentChunks[resturaunt] = {
-				total : 0,
-				elements : [],
-				time : 0,
-			};
-			currChunk = currentChunks[resturaunt];
-		}
 		let currList = currentDayLists[resturaunt];
 		if(currList.length === 0 || currChunk.elements.length >=5){
 			if( currChunk.elements.length === 0){
