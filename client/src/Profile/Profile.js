@@ -98,8 +98,8 @@ async function profile() {
   render() {
     return (
       <div className="profile">
-        <input type="button" value="Log profile" onClick={logProfile}/>
-        <input type="button" value="Update Page" onClick={this.updateProfilePage}/>
+        {/* <input type="button" value="Log profile" onClick={logProfile}/>
+        <input type="button" value="Update Page" onClick={this.updateProfilePage}/> */}
         <h1>Profile Page</h1>
         <input type="button" value="Submit Changes" onClick={this.postProfile}/>
         <h3>Receive notifications</h3>
