@@ -69,10 +69,10 @@ class Table extends Component {
         var Rendezvous = new RestaurantEntry("Rendezvous")
         var Study = new RestaurantEntry("Study", 25, 1, "9 PM", "12 AM")
         var Feast = new RestaurantEntry("Feast", 5, 2, "5 PM", "9 PM")
-        var BCafe = new RestaurantEntry("BCafe", 18, 5, "6 AM", "9 AM")
-        var DeNeve = new RestaurantEntry("DeNeve", 30, 4, "6 AM", "12 PM")
-        var Epic = new RestaurantEntry("Epic", 40, 5, "11 AM", "1 PM")
-        var BPlate = new RestaurantEntry("Bruin Plate", 7, 3, "12 PM", "3 PM")
+        var BCafe = new RestaurantEntry("BCafe", 18, 5, "12 PM", "3 PM")
+        var DeNeve = new RestaurantEntry("DeNeve", 30, 4, "6 AM", "10 AM")
+        var Epic = new RestaurantEntry("Epic", 20, 5, "5 PM", "9 PM")
+        var BPlate = new RestaurantEntry("Bruin Plate", 7, 3, "5 PM", "9 PM")
         this.state = {
           sortedBy: "Name",
           showingOnlyOpen: false,
@@ -121,9 +121,9 @@ class Table extends Component {
             try {
                 const updatedRestaurant = await restaurants(RESTAURANTCODES[i]);
                 //TODO: try this when waitTime data is ready
-                // const newWait = await waitTime(RESTAURANTNAMES[i]);
+                var newWait = await waitTime(RESTAURANTCODES[i]).time;
                 // console.log(newWait) 
-                const newWait = 1;
+                // newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;
                 const newClose = updatedRestaurant.restaurant.closeTime;
