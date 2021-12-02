@@ -46,27 +46,12 @@ class History extends React.Component {
         if (mhist.message === 'Failure') {
             alert('No data for given input');
         }
-        //console.log(mpreds.points)
         sessionStorage.setItem('hist', JSON.stringify(mhist.values));
         this.setState({
             hist: mhist.values,
         });
-        //this.setState();
-        //Chart();
-        //this.render();
-    }
 
-    /*
-    <form onSubmit={this.handleSubmit}>
-                <label>
-                    Which Dining Hall:
-                    <label>
-                        <p>Restaurant</p>
-                        <input type="text" onChange={this.handleChangeR}/>
-                    </label>
-                </label>
-                <input type="submit" value="Submit" />
-      </form>*/
+    }
 
       render() {
         return (
@@ -76,13 +61,13 @@ class History extends React.Component {
                 </div>
                 <form onSubmit={this.handleSubmit}>
                 <label>
-                    Historical Values:
+                    Historical Values:       
                     <label>
-                        <p>Restaurant</p>
+                        Restaurant
                         <input type="text" onChange={this.handleChangeR}/>
                     </label>
                     <label>
-                        <p>Date (YYYY-MM-DD)</p>
+                        Date (YYYY-MM-DD)
                         <input type="text" onChange={this.handleChangeD}/>
                     </label>
                 </label>

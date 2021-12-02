@@ -120,7 +120,6 @@ PredictionSchema.methods.integrateValues = function(points){
 		i++;
 	}
 	this.modelsUsed++;
-	console.log(this.values);
 }
 
 PredictionSchema.methods.generatePrediction = function(points){

@@ -23,15 +23,21 @@ function HChart() {
         //console.log(x[0]); 
         let w = x[0]/60000;
         let m = w%60;
+        if (m%10 == 0) {
+            m = m + "0";
+        }
         let h = Math.floor(w/60);
         let s = h + ":" + m;
         return s;
     };;
-    let getY = (x) => { return x[1]};
+    let getY = (x) => { 
+        let m = x[1]/60;
+        return m;
+    };
     return (
         <>
             <h1 className="text-heading">
-                Predictions for {restaur}
+                History for {restaur}
             </h1>
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={predictor} margin={{ right: 300 }}>
