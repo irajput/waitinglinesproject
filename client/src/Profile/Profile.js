@@ -68,14 +68,20 @@ async function profile() {
       if (index > -1) {
         uncheckedRestaurants.splice(index, 1);
       }
+      try {
       var checkboxInput = document.getElementById(restaurantName);
       checkboxInput.checked = true;
+      }
+      catch {}
     }
     //Uncheck those values not in following restaurants
     for (i = 0; i < uncheckedRestaurants.length; i++) {
       var restaurantName = uncheckedRestaurants[i]
+      try {
       var checkboxInput = document.getElementById(restaurantName);
       checkboxInput.checked = false;
+      }
+      catch {}
     }
     // var maxWaitInput = document.getElementById("wait-min");
     // maxWaitInput.value = "40";
@@ -84,6 +90,7 @@ async function profile() {
   async postProfile() {
     console.log("posting profile changes");
     var restaurantPrefs = [];
+    try {
     for (var i = 0; i < 7; i++) {
       var checkboxInput = document.getElementById(RESTAURANTCODES[i]);
       restaurantPrefs.push(checkboxInput.checked)
@@ -93,6 +100,7 @@ async function profile() {
         var test = await addToRestaurant(RESTAURANTCODES[j])
       }
     }
+    } catch {}
   }
 
   render() {
