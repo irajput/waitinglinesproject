@@ -121,8 +121,12 @@ class Table extends Component {
             try {
                 const updatedRestaurant = await restaurants(RESTAURANTCODES[i]);
                 //TODO: try this when waitTime data is ready
-                var newWait = await waitTime(RESTAURANTCODES[i]).time;
-                // console.log(newWait) 
+                var newWaitObject = await waitTime(RESTAURANTCODES[i]);
+                console.log(newWaitObject)
+                var newWait = newWaitObject.time;
+                newWait = newWait / 60 //Change seconds to minutes
+                newWait = newWait.toFixed(0)
+                console.log(newWait) 
                 // newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;
@@ -278,13 +282,23 @@ class Table extends Component {
     }
 
     hide(idString) {
+        try {
         var row = document.getElementById(idString);
         row.style.display = "none";
+        }
+        catch {
+            
+        }
     }
 
     show(idString) {
+        try {
         var row = document.getElementById(idString);
         row.style.display = "table-row";
+        }
+        catch {
+
+        }
     }
 
 
@@ -301,7 +315,7 @@ class Table extends Component {
                     <p className = "tableP">Only show currently open</p>
                 </div>
                 <input type="button" className = "tableInputs" value="Name" onClick={this.sortName}/>
-                <input type="button" className = "tableInputs" value="Wait" onClick={this.sortWait}/>
+                <input type="button" className = "tableInputs" value="Wait (min)" onClick={this.sortWait}/>
                 <input type="button" className = "tableInputs" value="Crowd" onClick={this.sortCrowd}/>
                 <input type="button" className = "tableInputs" value="Open" onClick={this.sortOpen}/>
                 <input type="button" className = "tableInputs" value="Close" onClick={this.sortClose}/>
