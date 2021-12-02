@@ -24,6 +24,9 @@ function Chart() {
         console.log(x[0]); 
         let w = x[0]/60000;
         let m = w%60;
+        if (m%10 == 0) {
+            m = m + "0";
+        }
         let h = Math.floor(w/60);
         let s = h + ":" + m;
         return s;

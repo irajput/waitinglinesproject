@@ -83,28 +83,22 @@ async function profile() {
 
   async postProfile() {
     console.log("posting profile changes");
-    // TODO: make switch mean something
-    // If switch is off, don't post anything
-    // const currentSwitch = this.Switch.current;
-    // if (currentSwitch.state.on) {
     var restaurantPrefs = [];
     for (var i = 0; i < 7; i++) {
       var checkboxInput = document.getElementById(RESTAURANTCODES[i]);
       restaurantPrefs.push(checkboxInput.checked)
     }
-    //TODO: Find how to update profile preferences
     for (var j = 0; j < 7; j++) {
       if (restaurantPrefs[j]) {
         var test = await addToRestaurant(RESTAURANTCODES[j])
       }
     }
-    // }
   }
 
   render() {
     return (
       <div className="profile container">
-        
+
         <h1>Profile Page</h1>
         <h4>Receive notifications</h4>
         <p>Notifications will be sent to the email tied to your account. </p>

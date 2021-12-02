@@ -61,7 +61,7 @@ class History extends React.Component {
                 </div>
                 <form onSubmit={this.handleSubmit}>
                 <label>
-                    Historical Values:
+                    Historical Values:       
                     <label>
                         Restaurant
                         <input type="text" onChange={this.handleChangeR}/>

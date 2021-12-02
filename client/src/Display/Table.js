@@ -69,10 +69,10 @@ class Table extends Component {
         var Rendezvous = new RestaurantEntry("Rendezvous")
         var Study = new RestaurantEntry("Study", 25, 1, "9 PM", "12 AM")
         var Feast = new RestaurantEntry("Feast", 5, 2, "5 PM", "9 PM")
-        var BCafe = new RestaurantEntry("BCafe", 18, 5, "6 AM", "9 AM")
-        var DeNeve = new RestaurantEntry("DeNeve", 30, 4, "6 AM", "12 PM")
-        var Epic = new RestaurantEntry("Epic", 40, 5, "11 AM", "1 PM")
-        var BPlate = new RestaurantEntry("Bruin Plate", 7, 3, "12 PM", "3 PM")
+        var BCafe = new RestaurantEntry("BCafe", 18, 5, "12 PM", "3 PM")
+        var DeNeve = new RestaurantEntry("DeNeve", 30, 4, "6 AM", "10 AM")
+        var Epic = new RestaurantEntry("Epic", 20, 5, "5 PM", "9 PM")
+        var BPlate = new RestaurantEntry("Bruin Plate", 7, 3, "5 PM", "9 PM")
         this.state = {
           sortedBy: "Name",
           showingOnlyOpen: false,
@@ -121,9 +121,13 @@ class Table extends Component {
             try {
                 const updatedRestaurant = await restaurants(RESTAURANTCODES[i]);
                 //TODO: try this when waitTime data is ready
-                // const newWait = await waitTime(RESTAURANTNAMES[i]);
-                // console.log(newWait) 
-                const newWait = 1;
+                var newWaitObject = await waitTime(RESTAURANTCODES[i]);
+                console.log(newWaitObject)
+                var newWait = newWaitObject.time;
+                newWait = newWait / 60 //Change seconds to minutes
+                newWait = newWait.toFixed(0)
+                console.log(newWait) 
+                // newWait = 1;
                 const newCrowd = parseInt(updatedRestaurant.restaurant.crowdednessRating);
                 const newOpen = updatedRestaurant.restaurant.openTime;
                 const newClose = updatedRestaurant.restaurant.closeTime;
@@ -134,7 +138,8 @@ class Table extends Component {
                 console.log("Error fetching restaurants. Will try again in 1 minute")
             }
         }
-        
+        this.toggleShowOpen();
+        this.toggleShowOpen();
     }
 
     toggleShowOpen() {
@@ -277,13 +282,23 @@ class Table extends Component {
     }
 
     hide(idString) {
+        try {
         var row = document.getElementById(idString);
         row.style.display = "none";
+        }
+        catch {
+
+        }
     }
 
     show(idString) {
+        try {
         var row = document.getElementById(idString);
         row.style.display = "table-row";
+        }
+        catch {
+
+        }
     }
 
 
@@ -293,13 +308,13 @@ class Table extends Component {
             <div>
                 {/* <p>{countUp}</p> */}
                 <p className = "tableP">Updates every minute</p>
-               
+
                 <div>
                     <input type="checkBox" onClick={this.toggleShowOpen} defaultChecked/>
                     <p className = "tableP">Only show currently open</p>
                 </div>
                 <input type="button" className = "tableInputs" value="Name" onClick={this.sortName}/>
-                <input type="button" className = "tableInputs" value="Wait" onClick={this.sortWait}/>
+                <input type="button" className = "tableInputs" value="Wait (min)" onClick={this.sortWait}/>
                 <input type="button" className = "tableInputs" value="Crowd" onClick={this.sortCrowd}/>
                 <input type="button" className = "tableInputs" value="Open" onClick={this.sortOpen}/>
                 <input type="button" className = "tableInputs" value="Close" onClick={this.sortClose}/>

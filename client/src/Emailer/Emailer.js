@@ -39,7 +39,6 @@ const RESTURAUNTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve"
    }
 
    async function getPreferences(restaurant) {
-    //TODO: Find how to get preferences
     var data = await profile();
     var preferences = data.user.followingRestaurants; //IDS
     const IDTORESTAURANT = {"61a2931328ac130c1a866f8e":"BPlate","61a6ce86d5dd6cd7b66447e6":"Rendezvous","61a6ce8bd5dd6cd7b66447e8":"Study","61a6ce8fd5dd6cd7b66447ea":"Feast","61a6ce95d5dd6cd7b66447ec":"BCafe","61a6ce9bd5dd6cd7b66447ee":"DeNeve","61a6cea0d5dd6cd7b66447f0":"Epic"}
@@ -66,11 +65,12 @@ const RESTURAUNTCODES = ["BPlate", "Rendezvous","Study","Feast","BCafe","DeNeve"
     // should take in specific restaurant
     async function shouldSendEmail(restaurant) {
       var preferThisRestaurant = await getPreferences(restaurant);
-      var waitTimePreference = 30; //TODO: get this locally?
-      //TODO: try this when waitTime data ready
-      // var waitTime = await waitTime(restaurant);
-      var waitTime = 20;
-      if (preferThisRestaurant && waitTime <= waitTimePreference) {
+      var waitTimePreference = 30;
+      // TODO: try this when waitTime data ready
+      const waitTimeObject = await waitTime(restaurant);
+      var waitTimeVal = waitTimeObject.time;
+      // var waitTime = 20;
+      if (preferThisRestaurant && waitTimeVal <= waitTimePreference) {
             return true;
       }
       return false;
