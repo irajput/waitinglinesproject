@@ -18,17 +18,7 @@ function Chart() {
         console.log(JSON.parse(sessionStorage.getItem('preds')))
         predictor = JSON.parse(sessionStorage.getItem('preds'))
     }
-    //let predictis = JSON.parse(sessionStorage.getItem('preds'));
-    //console.log("Hi" + predictis)
-    //const predurl1 = "http://localhost:3001/prediction?restaurant="
-    //const predurl =  predurl1.concat(restaur)
-    //console.log(predurl)
-    //setPosts(mpreds.data);
-    /*console.log(mpreds)
-    sessionStorage.setItem('preds', JSON.stringify(mpreds.response));
-    let predicts = sessionStorage.getItem('preds')*/
-    //let predicts = sessionStorage.getItem('preds');
-    //console.log("Hi" + predicts)
+
     console.log(JSON.parse(sessionStorage.getItem('preds')))
     let getX = (x) => {
         console.log(x[0]); 
@@ -38,7 +28,10 @@ function Chart() {
         let s = h + ":" + m;
         return s;
     };;
-    let getY = (x) => { return x[1]};
+    let getY = (x) => { 
+        let m = x[1]/60;
+        return m;
+    };
     return (
         <>
             <h1 className="text-heading">

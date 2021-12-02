@@ -27,11 +27,14 @@ function HChart() {
         let s = h + ":" + m;
         return s;
     };;
-    let getY = (x) => { return x[1]};
+    let getY = (x) => { 
+        let m = x[1]/60;
+        return m;
+    };
     return (
         <>
             <h1 className="text-heading">
-                Predictions for {restaur}
+                History for {restaur}
             </h1>
             <ResponsiveContainer width="100%" aspect={3}>
                 <LineChart data={predictor} margin={{ right: 300 }}>
