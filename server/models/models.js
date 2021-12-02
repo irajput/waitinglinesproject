@@ -155,6 +155,7 @@ PredictionSchema.methods.generatePrediction = function(points){
 				points[i].total/points[i].elements.length,
 			]);
 	}
+	nextTime = predictionList[predictionList.length - 1].time + timeStep;
 	for(let i = startingLength; i < maxIters && i < numSteps + startingLength; i++){
 		if(i > 1){ //if there are at least two values in prediction list
 			let val1 = predictionList[i-2];
