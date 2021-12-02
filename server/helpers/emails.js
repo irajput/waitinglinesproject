@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 
 exports.sendEmail = async (email,restaurant) => {
     // let {email}=req.body;
-
   try {
     const transporter = nodemailer.createTransport({
       host: process.env.HOST,
@@ -14,7 +13,7 @@ exports.sendEmail = async (email,restaurant) => {
         pass: process.env.PASS,
       },
     });
-
+    console.log("this",process.env.USER);
     await transporter.sendMail({
       from: process.env.USER,
       to: email,

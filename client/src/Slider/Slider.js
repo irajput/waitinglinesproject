@@ -60,6 +60,7 @@ class HallForm extends React.Component {
 
   render() {
     return (
+      <div className="sliderr">
 
       <form onSubmit={this.handleSubmit}>
         <label>
@@ -89,7 +90,7 @@ class HallForm extends React.Component {
 
         <input type="submit" value="Submit" />
       </form>
-
+      </div>
     );
   }
 }
