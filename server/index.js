@@ -163,7 +163,6 @@ app.use((err,req,res,next) => {
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
-
 app.post(
     "/signup",
     passport.authenticate('signup',{session: false}),
@@ -389,7 +388,7 @@ async function pushDayBack(){
 		await models.Hist.create({
 			restaurant: val,
 			date: dateString,
-			values: currentDayLists[val],
+			values: histVals.generatePrediction(currentDayLists[val]),
 		});
 		currentDayLists[val] = [];
 		currentPredictions[val] = [];
