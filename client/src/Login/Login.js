@@ -36,6 +36,7 @@ async function loginUser(email, password) {
     alert("Invalid credentials");
     }
     console.log(thing.token);
+    sessionStorage.setItem('login','true');
 	  return thing.token
   //}
   /*catch (error) {
@@ -65,6 +66,7 @@ export default function Login() {
       password);
     console.log("Got token");
     sessionStorage.setItem('token', token);
+    document.location.reload();
   }
 
   return(

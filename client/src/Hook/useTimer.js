@@ -1,11 +1,15 @@
 import { useState, useRef } from 'react';
 
 async function sendWait (time) {
+    let mtoken = sessionStorage.getItem('token');
+    if (mtoken === null) {
+        alert("Try logging in first!");
+        return;
+      }
     let rest = sessionStorage.getItem('restaurant')
     console.log(rest)
     let body = {"restaurant":rest,"timeDuration":time,}
     console.log(body)
-    let mtoken = sessionStorage.getItem('token');
     console.log(mtoken)
     let reco = await fetch('http://localhost:3001/user/recordTime', {
       method: 'POST',

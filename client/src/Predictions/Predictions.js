@@ -24,7 +24,8 @@ class Predictions extends React.Component {
       async handleSubmit(event) {
         event.preventDefault();
         let mrest = sessionStorage.getItem('restaurant')
-        console.log(mrest)
+        //console.log(mrest)
+        //console.log('http://localhost:3001/prediction?' + new URLSearchParams({'restaurant': mrest}).toString())
 
         //let mpreds = []
         let mpreds =  await fetch('http://localhost:3001/prediction?' + new URLSearchParams({'restaurant': mrest}).toString(), {
@@ -34,16 +35,22 @@ class Predictions extends React.Component {
             },
         })
         .then(data => data.json())
-        console.log(mpreds.points)
+        console.log(mpreds)
+        //console.log(mpreds.points)
         sessionStorage.setItem('preds', JSON.stringify(mpreds.points));
-        console.log(JSON.parse(sessionStorage.getItem('preds')))
+        this.setState({
+            preds: mpreds.points,
+        });
+        //this.setState();
+        //Chart();
+        //this.render();
     }
 
       render() {
         return (
             <div className="Pred">
                 <div className="Predictor">
-                    <Chart />
+                    <Chart points={this.state.preds}/>
                 </div>
                 <form onSubmit={this.handleSubmit}>
                 <label>

@@ -9,14 +9,21 @@ import Profile from "../Profile/Profile";
 import Display from "../Display/Display";
 import Stopwatch from "../Stopwatch/Stopwatch"
 import Predictions from "../Predictions/Predictions"
+import History from "../History/History"
 import { Routes, Route, Link} from "react-router-dom";
+import { session } from "passport";
+import Emailer from "../Emailer/Emailer"
 
 function App() {
   //if (sessionStorage.getItem('token') != null) {
    // <nav class="nav nav-pills nav-fill navMINE">
-  return (
+   sessionStorage.setItem('login', 'false');
+   let mtoken = sessionStorage.getItem('token');
+   if (mtoken !== null) {
+   return (
     <div className ="App"> 
-    
+    <Emailer />
+
 
     <div class="nav">
       <ul>
@@ -32,8 +39,8 @@ function App() {
 
       </ul>
        
-      </div>
-    
+    </div>
+        
     <div className = "main" >
 
     <Routes>
@@ -53,6 +60,8 @@ function App() {
 
       <Route path="/predictions" element={<Predictions/>} />
 
+      <Route path="/history" element={<History/>} />
+
     </Routes>
 
     </div>
@@ -62,13 +71,16 @@ function App() {
 
   );
 }
-/*else {
+else {
   return (
     <div className ="App"> 
     <nav>
         <ul id="navbar">
           <li>
             <Link to="/"> Home </Link>
+          </li>
+          <li>
+            <Link to="/signup"> Sign Up </Link>
           </li>
           <li>
             <Link to="/login"> Login </Link>
@@ -78,6 +90,12 @@ function App() {
           </li>
           <li>
             <Link to="/display"> Wait Line Display </Link>
+          </li>
+          <li>
+            <Link to="/predictions"> Predictions </Link>
+          </li>
+          <li>
+            <Link to="/history"> History </Link>
           </li>
         </ul>
       </nav>
@@ -89,9 +107,15 @@ function App() {
 
       <Route path="/login" element={<Login/>} />
 
+      <Route path="/signup" element={<Signup/>} />
+
       <Route path="/profile" element={<Profile/>} />
 
       <Route path="/display" element={<Display/>} />
+
+      <Route path="/predictions" element={<Predictions/>} />
+
+      <Route path="/history" element={<History/>} />
 
     </Routes>
 
@@ -100,6 +124,7 @@ function App() {
     
     </div>
   );
-}*/
+}
+}
 
 export default App;
