@@ -16,8 +16,8 @@ body {
   border-radius: 10px;
 }
 
-h3 {
-  color: white;
+.Stopwatch h3 {
+  color: rgb(114, 113, 113);
   text-align: center;
   padding-top: 8px;
   letter-spacing: 1.2px;
@@ -26,9 +26,15 @@ h3 {
 
 p {
   font-size: 28px;
+  color:rgb(128, 125, 125);
 }
 
 .stopwatch-card {
+  border:1px solid green;
+  margin-top:100px;
+  padding:10px;
+  border-radius:25px;
+  background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
   position: absolute;
   text-align: center;
   background-color: white;
@@ -59,5 +65,12 @@ button {
 }
 
 .Stop{
-  margin-top:200px;
+  margin-top:300px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.Stopwatch{
+  color:cadetblue;
 }

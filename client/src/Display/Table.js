@@ -293,8 +293,7 @@ class Table extends Component {
             <div>
                 {/* <p>{countUp}</p> */}
                 <p className = "tableP">Updates every minute</p>
-                <input type="button" value="Log restaurant" onClick={logRestaurant}/>
-                <input type="button" value="Log wait time" onClick={logWait}/>
+               
                 <div>
                     <input type="checkBox" onClick={this.toggleShowOpen} defaultChecked/>
                     <p className = "tableP">Only show currently open</p>

@@ -104,17 +104,16 @@ async function profile() {
   render() {
     return (
       <div className="profile container">
-        <input type="button" value="Log profile" onClick={logProfile}/>
-        <input type="button" value="Update Page" onClick={this.updateProfilePage}/>
+        
         <h1>Profile Page</h1>
-        <h3>Receive notifications</h3>
+        <h4>Receive notifications</h4>
         <p>Notifications will be sent to the email tied to your account. </p>
         
         <div id="container">
-            <h3>Maximum wait time (minutes):</h3>
+            <h4>Maximum wait time (minutes):</h4>
             <p>Once the wait time at a restaurant drops below this threshold, you will be notified. </p>
             <input type="number" id="wait-min" name="wait-min" min="1" max="60" defaultValue="30"/>
-            <h3>Receive notifications for these restaurants:</h3>
+            <h4>Receive notifications for these restaurants:</h4>
             <div class="checks">
             <div id="outer">
                 <input type="checkBox"  className = "inner" id = "BCafe"/>

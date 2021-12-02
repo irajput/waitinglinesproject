@@ -27,15 +27,13 @@ function App() {
 
     <div class="nav">
       <ul>
-        <li class="home"><a class="nav-item nav-link active" href="/">Home</a></li>
-        <li class="tutorials"><a class="nav-item nav-link " href="/login">Login</a></li>
-        <li class="news"><a class="nav-item nav-link " href="/signup">Sign Up</a></li>
-
         <li class="about"><a class="nav-item nav-link " href="/profile">Profile</a></li>
         <li class="news"><a class="nav-item nav-link " href="/display">Wait Line Display</a></li>
         <li class="contact"><a class="nav-item nav-link " href="/stopwatch">Clock In/Out </a></li>
         <li class="contact"><a class="nav-item nav-link " href="/predictions">Predictions </a></li>
         <li class="contact"> <a class="nav-item nav-link " href="/slider">Crowdedness </a></li>
+        <li class="contact"> <a class="nav-item nav-link " href="/history">History </a></li>
+
 
       </ul>
        
@@ -44,7 +42,7 @@ function App() {
     <div className = "main" >
 
     <Routes>
-      <Route exact path="/" element={<Home/>} />
+      <Route exact path="/" element={<Login/>} />
 
       <Route path="/login" element={<Login/>} />
 
@@ -74,36 +72,23 @@ function App() {
 else {
   return (
     <div className ="App"> 
-    <nav>
-        <ul id="navbar">
-          <li>
-            <Link to="/"> Home </Link>
-          </li>
-          <li>
-            <Link to="/signup"> Sign Up </Link>
-          </li>
-          <li>
-            <Link to="/login"> Login </Link>
-          </li>
-          <li>
-            <Link to="/profile"> Profile </Link>
-          </li>
-          <li>
-            <Link to="/display"> Wait Line Display </Link>
-          </li>
-          <li>
-            <Link to="/predictions"> Predictions </Link>
-          </li>
-          <li>
-            <Link to="/history"> History </Link>
-          </li>
-        </ul>
-      </nav>
+    <div class="nav">
+      <ul>
+        <li class="tutorials"><a class="nav-item nav-link " href="/login">Login</a></li>
+        <li class="news"><a class="nav-item nav-link " href="/signup">Sign Up</a></li>
+        <li class="about"><a class="nav-item nav-link " href="/profile">Profile</a></li>
+        <li class="news"><a class="nav-item nav-link " href="/display">Wait Line Display</a></li>
+        <li class="contact"><a class="nav-item nav-link " href="/predictions">Predictions </a></li>
+        <li class="contact"> <a class="nav-item nav-link " href="/history">History </a></li>
+
+      </ul>
+       
+    </div>
     
     <div className = "main" >
 
     <Routes>
-      <Route exact path="/" element={<Home/>} />
+      <Route exact path="/" element={<Login/>} />
 
       <Route path="/login" element={<Login/>} />
 
