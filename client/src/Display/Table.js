@@ -134,7 +134,8 @@ class Table extends Component {
                 console.log("Error fetching restaurants. Will try again in 1 minute")
             }
         }
-        
+        this.toggleShowOpen();
+        this.toggleShowOpen();
     }
 
     toggleShowOpen() {
